@@ -220,7 +220,7 @@ class AIInferenceService {
       _sessionManager.updateTokenUsage(estimatedTokens + outputTokens);
 
       developer.log(
-          '✅ OCR response complete: ${response.length} chars, ~${outputTokens} tokens',
+          '✅ OCR response complete: ${response.length} chars, ~$outputTokens tokens',
           name: 'dyslexic_ai.inference');
 
       return _cleanAIResponse(response);

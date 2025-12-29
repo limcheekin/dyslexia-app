@@ -180,7 +180,7 @@ abstract class _ReadingCoachStore with Store {
       if (textWord == spokenWord) {
         highlightStates[textIndex] = true;
         matchCount++;
-        developer.log('✅ Exact match: "${textWord}" at text[$textIndex] ↔ spoken[$spokenIndex]', 
+        developer.log('✅ Exact match: "$textWord" at text[$textIndex] ↔ spoken[$spokenIndex]', 
             name: 'dyslexic_ai.reading_coach.matching');
         textIndex++;
         spokenIndex++;
@@ -189,7 +189,7 @@ abstract class _ReadingCoachStore with Store {
       else if (_calculateSimilarity(textWord, spokenWord) >= 0.8) {
         highlightStates[textIndex] = true;
         matchCount++;
-        developer.log('🔸 Fuzzy match: "${textWord}" ↔ "${spokenWord}" at text[$textIndex] ↔ spoken[$spokenIndex]', 
+        developer.log('🔸 Fuzzy match: "$textWord" ↔ "$spokenWord" at text[$textIndex] ↔ spoken[$spokenIndex]', 
             name: 'dyslexic_ai.reading_coach.matching');
         textIndex++;
         spokenIndex++;
@@ -199,14 +199,14 @@ abstract class _ReadingCoachStore with Store {
           spokenWord.startsWith(textWord.substring(0, textWord.length ~/ 2))) {
         highlightStates[textIndex] = true;
         matchCount++;
-        developer.log('🔹 Partial match: "${textWord}" ↔ "${spokenWord}" at text[$textIndex] ↔ spoken[$spokenIndex]', 
+        developer.log('🔹 Partial match: "$textWord" ↔ "$spokenWord" at text[$textIndex] ↔ spoken[$spokenIndex]', 
             name: 'dyslexic_ai.reading_coach.matching');
         textIndex++;
         spokenIndex++;
       }
       // No match - try recovery by looking ahead
       else {
-        developer.log('❌ No match: "${textWord}" ↔ "${spokenWord}" at text[$textIndex] ↔ spoken[$spokenIndex]', 
+        developer.log('❌ No match: "$textWord" ↔ "$spokenWord" at text[$textIndex] ↔ spoken[$spokenIndex]', 
             name: 'dyslexic_ai.reading_coach.matching');
         
         // Try to find the next matching sequence
@@ -220,14 +220,14 @@ abstract class _ReadingCoachStore with Store {
           spokenIndex = recoveryResult.spokenIndex;
         } else {
           // No recovery possible - skip this spoken word
-          developer.log('⏭️ Skip spoken: "${spokenWord}" (no recovery possible)', 
+          developer.log('⏭️ Skip spoken: "$spokenWord" (no recovery possible)', 
               name: 'dyslexic_ai.reading_coach.matching');
           spokenIndex++;
         }
       }
     }
 
-    developer.log('🏁 Matching complete: ${matchCount} matches, textIndex=${textIndex}, spokenIndex=${spokenIndex}', 
+    developer.log('🏁 Matching complete: $matchCount matches, textIndex=$textIndex, spokenIndex=$spokenIndex', 
         name: 'dyslexic_ai.reading_coach.matching');
 
     return highlightStates;
@@ -252,7 +252,7 @@ abstract class _ReadingCoachStore with Store {
         // Check for exact match or high similarity
         if (futureTextWord == futureSpokenWord || 
             _calculateSimilarity(futureTextWord, futureSpokenWord) >= 0.8) {
-          developer.log('🎯 Recovery match found: "${futureTextWord}" ↔ "${futureSpokenWord}" at text[${currentTextIndex + textOffset}] ↔ spoken[${currentSpokenIndex + spokenOffset}]', 
+          developer.log('🎯 Recovery match found: "$futureTextWord" ↔ "$futureSpokenWord" at text[${currentTextIndex + textOffset}] ↔ spoken[${currentSpokenIndex + spokenOffset}]', 
               name: 'dyslexic_ai.reading_coach.matching');
           return (
             textIndex: currentTextIndex + textOffset,
@@ -642,9 +642,9 @@ abstract class _ReadingCoachStore with Store {
     // Only process if we have new words (prevents re-processing causing highlight misalignment)
     final newWordCount = allWords.length;
     
-    developer.log('📡 Speech received: "${speech}" (${speech.length} chars)', 
+    developer.log('📡 Speech received: "$speech" (${speech.length} chars)', 
         name: 'dyslexic_ai.reading_coach');
-    developer.log('🔢 Word count: ${newWordCount} new vs ${_lastProcessedWordCount} last processed', 
+    developer.log('🔢 Word count: $newWordCount new vs $_lastProcessedWordCount last processed', 
         name: 'dyslexic_ai.reading_coach');
     
     if (newWordCount > _lastProcessedWordCount) {
@@ -660,11 +660,11 @@ abstract class _ReadingCoachStore with Store {
       developer.log('📋 New words: ${allWords.join(" | ")}', 
           name: 'dyslexic_ai.reading_coach');
     } else if (newWordCount < _lastProcessedWordCount) {
-      developer.log('⚠️ Word count decreased! ${_lastProcessedWordCount} → ${newWordCount} (possible speech reset)', 
+      developer.log('⚠️ Word count decreased! $_lastProcessedWordCount → $newWordCount (possible speech reset)', 
           name: 'dyslexic_ai.reading_coach');
       // Don't update - this might be speech recognition restarting
     } else {
-      developer.log('📍 Same word count (${newWordCount}), no update needed', 
+      developer.log('📍 Same word count ($newWordCount), no update needed', 
           name: 'dyslexic_ai.reading_coach');
     }
   }

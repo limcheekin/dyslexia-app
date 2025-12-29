@@ -239,7 +239,7 @@ class ProfileUpdateService {
       final session = recentLogs[i];
       final accuracy = ((session.accuracy ?? 0.0) * 100).round();
       final timeDiff = DateTime.now().difference(session.timestamp);
-      developer.log('Session ${i + 1}: ${session.feature} - ${accuracy}% accuracy (${timeDiff.inHours}h ago)',
+      developer.log('Session ${i + 1}: ${session.feature} - $accuracy% accuracy (${timeDiff.inHours}h ago)',
           name: 'dyslexic_ai.profile_update');
     }
     
@@ -274,7 +274,7 @@ class ProfileUpdateService {
     for (int i = 0; i < recentSessions.length; i++) {
       final session = recentSessions[i];
       final accuracy = ((session.accuracy ?? 0.0) * 100).round();
-      developer.log('  Session ${i + 1}: ${session.feature} - ${accuracy}% accuracy', 
+      developer.log('  Session ${i + 1}: ${session.feature} - $accuracy% accuracy', 
           name: 'dyslexic_ai.profile_update');
     }
     developer.log('Calculated average accuracy: ${(avgAccuracy * 100).round()}%', name: 'dyslexic_ai.profile_update');

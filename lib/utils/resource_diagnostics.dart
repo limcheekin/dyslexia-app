@@ -153,9 +153,9 @@ class ResourceDiagnostics {
     if (_activeTimers.isEmpty) {
       buffer.writeln('  (none)');
     } else {
-      _activeTimers.keys.forEach((key) {
+      for (var key in _activeTimers.keys) {
         buffer.writeln('  - $key');
-      });
+      }
     }
     buffer.writeln('');
     
@@ -173,9 +173,9 @@ class ResourceDiagnostics {
     if (_activeStreamControllers.isEmpty) {
       buffer.writeln('  (none)');
     } else {
-      _activeStreamControllers.keys.forEach((key) {
+      for (var key in _activeStreamControllers.keys) {
         buffer.writeln('  - $key');
-      });
+      }
     }
     buffer.writeln('');
     
@@ -183,9 +183,9 @@ class ResourceDiagnostics {
     if (_memoryPressureEvents.isEmpty) {
       buffer.writeln('  (none)');
     } else {
-      _memoryPressureEvents.forEach((event) {
+      for (var event in _memoryPressureEvents) {
         buffer.writeln('  - $event');
-      });
+      }
     }
     buffer.writeln('');
     

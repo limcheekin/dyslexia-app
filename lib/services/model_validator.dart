@@ -97,7 +97,7 @@ class ModelValidator {
           expectedSize: expectedSize,
         );
       } else if (sizeDiff > 0) {
-        developer.log('⚠️ Minor size difference: ${sizeDiff} bytes (${sizeDiffPercent.toStringAsFixed(3)}%), accepting as valid', 
+        developer.log('⚠️ Minor size difference: $sizeDiff bytes (${sizeDiffPercent.toStringAsFixed(3)}%), accepting as valid', 
                      name: 'dyslexic_ai.model_validator');
       }
 

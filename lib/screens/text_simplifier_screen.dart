@@ -216,7 +216,7 @@ class _TextSimplifierScreenState extends State<TextSimplifierScreen> {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      'Generating AI Definition for \"${_store.wordBeingDefined}\"...',
+                      'Generating AI Definition for "${_store.wordBeingDefined}"...',
                       style: Theme.of(context).textTheme.bodySmall?.copyWith(
                             color: Colors.grey,
                           ),
