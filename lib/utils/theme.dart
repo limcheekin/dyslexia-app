@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
 class DyslexiaTheme {
-  static const Color primaryBackground = Color(0xFFF8F8F2); // Off-white background
+  static const Color primaryBackground =
+      Color(0xFFF8F8F2); // Off-white background
   static const Color secondaryBackground = Color(0xFFF8F8F2);
-  static const Color primaryAccent = Color(0xFF2C3E50); // Charcoal for buttons/accents
-  static const Color secondaryAccent = Color(0xFF34495E); // Slightly lighter charcoal
-  static const Color cardBackground = Color(0xFFFFFFFF); // Keep cards white for contrast
+  static const Color primaryAccent =
+      Color(0xFF2C3E50); // Charcoal for buttons/accents
+  static const Color secondaryAccent =
+      Color(0xFF34495E); // Slightly lighter charcoal
+  static const Color cardBackground =
+      Color(0xFFFFFFFF); // Keep cards white for contrast
   static const Color successColor = Color(0xFF27AE60);
   static const Color warningColor = Color(0xFFF39C12);
   static const Color errorColor = Color(0xFFE74C3C);
@@ -28,7 +32,6 @@ class DyslexiaTheme {
         onSurface: textPrimary,
         brightness: Brightness.light,
       ),
-      
       fontFamily: fontFamily,
       textTheme: TextTheme(
         headlineLarge: TextStyle(
@@ -105,17 +108,15 @@ class DyslexiaTheme {
           fontFamily: fontFamily,
         ),
       ),
-      
-      cardTheme: CardTheme(
+      cardTheme: const CardThemeData(
         color: cardBackground,
         elevation: 2,
         shadowColor: shadowColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
         ),
-        margin: const EdgeInsets.all(8),
+        margin: EdgeInsets.all(8),
       ),
-      
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
           backgroundColor: primaryAccent,
@@ -134,7 +135,6 @@ class DyslexiaTheme {
           ),
         ),
       ),
-      
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: primaryAccent,
@@ -151,7 +151,6 @@ class DyslexiaTheme {
           ),
         ),
       ),
-      
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: cardBackground,
@@ -167,7 +166,8 @@ class DyslexiaTheme {
           borderRadius: BorderRadius.circular(8),
           borderSide: const BorderSide(color: primaryAccent, width: 1.5),
         ),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         hintStyle: TextStyle(
           color: textSecondary,
           fontSize: 14,
@@ -175,7 +175,6 @@ class DyslexiaTheme {
           fontFamily: fontFamily,
         ),
       ),
-      
       appBarTheme: AppBarTheme(
         backgroundColor: primaryBackground,
         foregroundColor: textPrimary,
@@ -189,8 +188,7 @@ class DyslexiaTheme {
           fontFamily: fontFamily,
         ),
       ),
-      
       useMaterial3: true,
     );
   }
-} 
+}
