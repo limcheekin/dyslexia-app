@@ -168,6 +168,45 @@ class _ModelLoadingLScreenState extends State<ModelLoadingScreen>
     
     // If not downloaded, trigger the download process
     await _modelDownloadService.downloadModelIfNeeded();
+    /*await _modelDownloadService.downloadModelIfNeeded(
+      onProgress: (progress) {
+        if (!mounted) return;
+        
+        // Check for initialization signal (-1.0)
+        if (progress < 0) {
+          setState(() {
+            _isInitializing = true;
+          });
+          return;
+        }
+
+        setState(() {
+          _loadingProgress = progress;
+          _progressText = '${(progress * 100).toInt()}%';
+          
+          // If we are downloading, make sure initializing flag is off
+          if (progress < 1.0) {
+            _isInitializing = false;
+          }
+        });
+      },
+      onError: (error) {
+        if (!mounted) return;
+        setState(() {
+          _loadingError = error;
+          _isInitializing = false;
+        });
+      },
+      onSuccess: () {
+        if (!mounted) return;
+        setState(() {
+          _isModelReady = true;
+          _loadingProgress = 1.0;
+          _progressText = '100%';
+        });
+        _navigateToHome();
+      },
+    );*/
   }
 
   void _startModelInitialization() {
@@ -194,13 +233,17 @@ class _ModelLoadingLScreenState extends State<ModelLoadingScreen>
   }
 
   void _retry() {
-    setState(() {
-      _loadingError = null;
-      _loadingProgress = 0.0;
-      _isModelReady = false;
-      _isInitializing = false;
+    // Clear potentially corrupt state before retrying
+    _modelDownloadService.clearModelData().then((_) {
+      if (!mounted) return;
+      setState(() {
+        _loadingError = null;
+        _loadingProgress = 0.0;
+        _isModelReady = false;
+        _isInitializing = false;
+      });
+      _flutterDownloadService.startOrResumeDownload();
     });
-    _flutterDownloadService.startOrResumeDownload();
   }
   
   void _navigateToHome() {

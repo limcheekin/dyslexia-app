@@ -5,7 +5,11 @@ import 'package:flutter_gemma/flutter_gemma.dart';
 import 'package:flutter_gemma/core/model.dart';
 import 'package:flutter_gemma/pigeon.g.dart';
 import 'package:flutter_gemma/flutter_gemma_interface.dart';
+import 'package:flutter_gemma/core/domain/model_source.dart';
 import 'package:get_it/get_it.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
+import 'package:shared_preferences/shared_preferences.dart';
 
 enum InitializationStatus {
   notStarted,
@@ -33,8 +37,9 @@ class ModelInitializer {
   static const int maxRetries = 3;
   static const Duration baseDelay = Duration(seconds: 2);
   static const Duration maxDelay = Duration(seconds: 30);
+  static const String _crashDetectionKey = 'dyslexic_ai_model_init_in_progress';
 
-  final _gemmaPlugin = FlutterGemmaPlugin.instance;
+  // Removed _gemmaPlugin as we now use static FlutterGemma API
 
   int _currentAttempt = 0;
   InitializationStatus _status = InitializationStatus.notStarted;
@@ -76,7 +81,21 @@ class ModelInitializer {
         '📊 Initializing model file: ${(fileSize / (1024 * 1024)).toStringAsFixed(1)}MB',
         name: 'dyslexic_ai.model_initializer');
 
-    // Attempt initialization with retry logic
+    final prefs = await SharedPreferences.getInstance();
+    
+    // Check if we crashed last time
+    if (prefs.getBool(_crashDetectionKey) == true) {
+      developer.log(
+          '⚠️ DETECTED CRASH: Initialization was interrupted previously. Clearing GPU cache to recover.',
+          name: 'dyslexic_ai.model_initializer');
+      await clearGpuCache();
+    }
+
+    // Set crash marker - if we die after this, next run will know
+    await prefs.setBool(_crashDetectionKey, true);
+
+    try {
+      // Attempt initialization with retry logic
     for (_currentAttempt = 1;
         _currentAttempt <= maxRetries;
         _currentAttempt++) {
@@ -127,49 +146,74 @@ class ModelInitializer {
         'Model initialization failed after $maxRetries attempts. Last error: $_lastError';
     developer.log('❌ $finalError', name: 'dyslexic_ai.model_initializer');
 
+    // Attempt to clear GPU cache to fix potential corruption for next time
+    await clearGpuCache();
+
     return InitializationResult(
       success: false,
       error: finalError,
       status: _status,
       attemptNumber: _currentAttempt,
     );
+  } finally {
+      // Clear crash marker - we survived!
+      await prefs.setBool(_crashDetectionKey, false);
+    }
   }
 
-  /// Attempt a single initialization - this is the core logic from the original _setModelPathInFlutterGemma
+  /// Clear GPU delegate cache files to resolve corruption issues
+  Future<void> clearGpuCache() async {
+    try {
+      final tempDir = await getTemporaryDirectory();
+      developer.log('🧹 Clearing GPU cache in: ${tempDir.path}', 
+          name: 'dyslexic_ai.model_initializer');
+      
+      final dir = Directory(tempDir.path);
+      if (await dir.exists()) {
+        final List<FileSystemEntity> entities = await dir.list().toList();
+        int deletedCount = 0;
+        
+        for (final entity in entities) {
+          if (entity is File) {
+            final filename = path.basename(entity.path);
+            // Delete .bin files (TFLite cache) and .task files (if any ended up there)
+            if (filename.endsWith('.bin') || filename.contains('gemma')) {
+               try {
+                 await entity.delete();
+                 deletedCount++;
+               } catch (e) {
+                 // Ignore delete errors for locked files
+               }
+            }
+          }
+        }
+        
+        developer.log('✨ Deleted $deletedCount cache files', 
+            name: 'dyslexic_ai.model_initializer');
+      }
+    } catch (e) {
+      developer.log('⚠️ Error clearing GPU cache: $e', 
+          name: 'dyslexic_ai.model_initializer');
+    }
+  }
+
+  /// Attempt a single initialization using new FlutterGemma API
   Future<bool> _attemptInitialization(String modelPath) async {
     try {
-      developer.log('🔧 Setting model path in flutter_gemma: $modelPath',
+      developer.log('🔧 Installing model via FlutterGemma: $modelPath',
           name: 'dyslexic_ai.model_initializer');
 
-      // Get flutter_gemma model manager
-      final modelManager = _gemmaPlugin.modelManager;
-      developer.log(
-          '📚 Got flutter_gemma model manager: ${modelManager.runtimeType}',
+      // Use the new API to install the model from file
+      // This registers it as the active model
+      await FlutterGemma.installModel(
+        modelType: ModelType.gemmaIt,
+        fileType: ModelFileType.task, // Default assumption, can expose if needed
+      ).fromFile(modelPath).install();
+      
+      developer.log('✅ Model installed via FlutterGemma',
           name: 'dyslexic_ai.model_initializer');
 
-      // Check current installation status
-      final isCurrentlyInstalled = await modelManager.isModelInstalled;
-      developer.log('📋 Current installation status: $isCurrentlyInstalled',
-          name: 'dyslexic_ai.model_initializer');
-
-      // Set the model path
-      developer.log('⚙️ Calling setModelPath...',
-          name: 'dyslexic_ai.model_initializer');
-      await modelManager.setModelPath(modelPath);
-
-      // Check if path was set successfully
-      final isNowInstalled = await modelManager.isModelInstalled;
-      developer.log(
-          '✅ Model installation status after setModelPath: $isNowInstalled',
-          name: 'dyslexic_ai.model_initializer');
-
-      if (!isNowInstalled) {
-        developer.log('❌ Model path setting failed',
-            name: 'dyslexic_ai.model_initializer');
-        return false;
-      }
-
-      // Now initialize the model for inference
+      // Now ensure we can create an active model session/instance
       developer.log('🚀 Initializing model for inference...',
           name: 'dyslexic_ai.model_initializer');
 
@@ -209,18 +253,20 @@ class ModelInitializer {
     }
   }
 
-  /// Create model with GPU/CPU fallback - extracted from original code
+  /// Create model with GPU/CPU fallback using new FlutterGemma API
   Future<InferenceModel?> _createModelWithFallback() async {
     try {
       developer.log('🎮 Attempting GPU delegate initialization...',
           name: 'dyslexic_ai.model_initializer');
-      final gpuModel = await _gemmaPlugin.createModel(
-        modelType: ModelType.gemmaIt,
+      
+      // Use getActiveModel with GPU preference
+      final gpuModel = await FlutterGemma.getActiveModel(
         preferredBackend: PreferredBackend.gpu,
         maxTokens: 2048,
         supportImage: true,
         maxNumImages: 1,
       );
+      
       developer.log('✅ GPU delegate initialized successfully!',
           name: 'dyslexic_ai.model_initializer');
       return gpuModel;
@@ -230,13 +276,14 @@ class ModelInitializer {
       developer.log('🔄 Falling back to CPU backend...',
           name: 'dyslexic_ai.model_initializer');
       try {
-        final cpuModel = await _gemmaPlugin.createModel(
-          modelType: ModelType.gemmaIt,
+        // Use getActiveModel with CPU preference
+        final cpuModel = await FlutterGemma.getActiveModel(
           preferredBackend: PreferredBackend.cpu,
           maxTokens: 2048,
           supportImage: true,
           maxNumImages: 1,
         );
+        
         developer.log('✅ CPU delegate initialized successfully',
             name: 'dyslexic_ai.model_initializer');
         return cpuModel;

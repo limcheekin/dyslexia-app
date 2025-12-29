@@ -356,6 +356,9 @@ class ModelDownloadService {
 
     // Reset initializer state
     _modelInitializer.reset();
+    
+    // Clear GPU cache to prevent corruption issues
+    await _modelInitializer.clearGpuCache();
 
     // Also try to delete the actual file
     try {

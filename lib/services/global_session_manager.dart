@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer' as developer;
 import 'package:flutter_gemma/flutter_gemma.dart';
+import 'package:get_it/get_it.dart';
 
 /// Activity types for session management
 enum AIActivity {
@@ -293,11 +294,12 @@ class GlobalSessionManager {
   /// Get the model instance
   Future<InferenceModel?> _getModel() async {
     if (_model == null) {
-      final plugin = FlutterGemmaPlugin.instance;
-      _model = plugin.initializedModel;
-      
-      if (_model == null) {
-        developer.log('No model initialized', name: 'dyslexic_ai.session');
+      // Try to get from GetIt - ModelInitializer ensures it's registered
+      if (GetIt.instance.isRegistered<InferenceModel>()) {
+        _model = GetIt.instance<InferenceModel>();
+        developer.log('✅ Retrieved model from ServiceLocator', name: 'dyslexic_ai.session');
+      } else {
+        developer.log('❌ No model registered in ServiceLocator', name: 'dyslexic_ai.session');
         return null;
       }
     }

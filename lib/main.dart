@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter_gemma/flutter_gemma.dart';
 import 'dart:isolate';
 import 'dart:ui';
 import 'screens/home_screen.dart';
@@ -77,6 +78,9 @@ Future<void> _requestNotificationPermission() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize FlutterGemma
+  await FlutterGemma.initialize();
 
   // Initialize FlutterDownloader for background model downloads
   await FlutterDownloader.initialize(debug: kDebugMode);

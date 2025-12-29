@@ -134,28 +134,27 @@ AIInferenceService? getAIInferenceService() {
   try {
     debugLog('🔍 Getting AI inference service...');
 
-    // Check if we already have a registered singleton
+    // Check if we already have a registered service singleton
     if (getIt.isRegistered<AIInferenceService>()) {
       debugLog('✅ Reusing existing AIInferenceService singleton');
       return getIt<AIInferenceService>();
     }
 
-    final plugin = FlutterGemmaPlugin.instance;
-    debugLog('📚 Got flutter_gemma plugin: ${plugin.runtimeType}');
-
-    final inferenceModel = plugin.initializedModel;
-    debugLog(
-        '🤖 Initialized model: ${inferenceModel?.runtimeType ?? 'null'}');
-
-    if (inferenceModel != null) {
+    // Try to get the underlying InferenceModel from GetIt (registered by ModelInitializer)
+    if (getIt.isRegistered<InferenceModel>()) {
+      debugLog('✅ Found registered InferenceModel');
+      final inferenceModel = getIt<InferenceModel>();
+      
       debugLog('✅ Creating new AIInferenceService singleton');
       final service = AIInferenceService(inferenceModel);
       getIt.registerSingleton<AIInferenceService>(service);
       return service;
-    } else {
-      debugLog('❌ No initialized model available');
-      return null;
-    }
+    } 
+    
+    // If we're here, no model is initialized yet
+    debugLog('❌ No initialized model available in service locator');
+    return null;
+
   } catch (e) {
     debugLog('❌ Error getting AI service: $e');
     return null;
