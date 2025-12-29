@@ -47,6 +47,9 @@ abstract class _ReadingCoachStore with Store {
   }
 
   @observable
+  bool isEditing = true;
+
+  @observable
   String currentText = '';
 
   @observable
@@ -116,7 +119,7 @@ abstract class _ReadingCoachStore with Store {
   bool get hasSession => currentSession != null;
 
   @computed
-  bool get isInInputMode => !isGeneratingStory && currentText.isEmpty;
+  bool get isInInputMode => !isGeneratingStory && isEditing;
 
   @computed
   String get recordingStatusText {
@@ -341,10 +344,16 @@ abstract class _ReadingCoachStore with Store {
   }
 
   @action
+  void setEditing(bool editing) {
+    isEditing = editing;
+  }
+
+  @action
   void clearCurrentText() {
     currentText = '';
     currentTextWords.clear();
     errorMessage = null;
+    isEditing = true;
     // Clear any active session when starting fresh
     if (currentSession != null) {
       currentSession = null;
@@ -358,6 +367,7 @@ abstract class _ReadingCoachStore with Store {
   @action
   void selectPresetStory(PresetStory story) {
     setCurrentText(story.content);
+    setEditing(false);
   }
 
   /// Create a safe default profile for users without profiles
@@ -416,6 +426,7 @@ abstract class _ReadingCoachStore with Store {
       developer.log(
           '📚 Final story: ${finalText.length} chars, ${finalText.split(RegExp(r'\s+')).length} words',
           name: 'dyslexic_ai.reading_coach');
+      setEditing(false);
     } catch (e) {
       developer.log('❌ AI story generation failed: $e',
           name: 'dyslexic_ai.reading_coach');
@@ -438,6 +449,7 @@ abstract class _ReadingCoachStore with Store {
         final extractedText =
             await _ocrService.processImageForReading(File(image.path));
         setCurrentText(extractedText);
+        setEditing(true);
       }
     } catch (e) {
       errorMessage = 'Failed to process image: $e';

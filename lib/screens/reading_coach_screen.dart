@@ -316,7 +316,7 @@ class _ReadingCoachScreenState extends State<ReadingCoachScreen> {
             contentPadding: const EdgeInsets.all(16),
           ),
           onChanged: (text) {
-            _store.setCurrentText(text);
+             _store.setCurrentText(text);
           },
         ),
         const SizedBox(height: 8),
@@ -349,7 +349,26 @@ class _ReadingCoachScreenState extends State<ReadingCoachScreen> {
                 )
               : const SizedBox(height: 8),
         ),
-        const SizedBox(height: 16),
+        // Add Done button to confirming text entry
+        if (_store.currentText.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  _store.setEditing(false);
+                },
+                icon: const Icon(Icons.check),
+                label: const Text('Done'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Theme.of(context).primaryColor,
+                  foregroundColor: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        const SizedBox(height: 8), // Small gap if button is hidden, or extra gap if shown
         Row(
           children: [
             Expanded(
@@ -477,11 +496,11 @@ class _ReadingCoachScreenState extends State<ReadingCoachScreen> {
               ),
               IconButton(
                 onPressed: () {
-                  _store.clearCurrentText();
-                  _textController.clear();
+                  _textController.text = _store.currentText;
+                  _store.setEditing(true);
                 },
                 icon: const Icon(Icons.edit, size: 20),
-                tooltip: 'New text',
+                tooltip: 'Edit text',
               ),
               IconButton(
                 onPressed: () => _store.speakText(_store.currentText),

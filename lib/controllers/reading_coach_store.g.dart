@@ -59,6 +59,22 @@ mixin _$ReadingCoachStore on _ReadingCoachStore, Store {
               name: '_ReadingCoachStore.wordHighlightStates'))
       .value;
 
+  late final _$isEditingAtom =
+      Atom(name: '_ReadingCoachStore.isEditing', context: context);
+
+  @override
+  bool get isEditing {
+    _$isEditingAtom.reportRead();
+    return super.isEditing;
+  }
+
+  @override
+  set isEditing(bool value) {
+    _$isEditingAtom.reportWrite(value, super.isEditing, () {
+      super.isEditing = value;
+    });
+  }
+
   late final _$currentTextAtom =
       Atom(name: '_ReadingCoachStore.currentText', context: context);
 
@@ -434,6 +450,17 @@ mixin _$ReadingCoachStore on _ReadingCoachStore, Store {
   }
 
   @override
+  void setEditing(bool editing) {
+    final _$actionInfo = _$_ReadingCoachStoreActionController.startAction(
+        name: '_ReadingCoachStore.setEditing');
+    try {
+      return super.setEditing(editing);
+    } finally {
+      _$_ReadingCoachStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void clearCurrentText() {
     final _$actionInfo = _$_ReadingCoachStoreActionController.startAction(
         name: '_ReadingCoachStore.clearCurrentText');
@@ -524,6 +551,7 @@ mixin _$ReadingCoachStore on _ReadingCoachStore, Store {
   @override
   String toString() {
     return '''
+isEditing: ${isEditing},
 currentText: ${currentText},
 currentSession: ${currentSession},
 recognizedSpeech: ${recognizedSpeech},
