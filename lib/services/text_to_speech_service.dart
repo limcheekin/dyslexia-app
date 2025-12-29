@@ -17,10 +17,29 @@ class TextToSpeechService {
     try {
       developer.log('🔊 Initializing simple TTS service', name: 'dyslexic_ai.tts');
       
-      await _flutterTts.setLanguage('en-US');
-      await _flutterTts.setSpeechRate(0.5);
-      await _flutterTts.setVolume(1.0);
-      await _flutterTts.setPitch(1.0);
+      // Wrap configuration in retry loop to handle DeadObjectException and service restarts
+      int retries = 3;
+      while (retries > 0) {
+        try {
+          // Add a small initial delay to allow binding to stabilize
+          if (retries == 3) await Future.delayed(const Duration(milliseconds: 500));
+          
+          await _flutterTts.setLanguage('en-US');
+          await _flutterTts.setSpeechRate(0.5);
+          await _flutterTts.setVolume(1.0);
+          await _flutterTts.setPitch(1.0);
+          break; // Success
+        } catch (e) {
+          retries--;
+          if (retries == 0) {
+             developer.log('⚠️ TTS configuration warning: Failed after retries: $e', name: 'dyslexic_ai.tts');
+             // Continue anyway, as default settings might work or service might recover later
+          } else {
+             developer.log('⚠️ TTS configuration failed (DeadObjectException?), retrying in 1s... ($retries attempts left): $e', name: 'dyslexic_ai.tts');
+             await Future.delayed(const Duration(seconds: 1));
+          }
+        }
+      }
 
       // Simple completion handler
       _flutterTts.setCompletionHandler(() {
@@ -42,7 +61,8 @@ class TextToSpeechService {
       developer.log('🔊 Simple TTS service initialized successfully', name: 'dyslexic_ai.tts');
     } catch (e) {
       developer.log('🔊 TTS initialization failed: $e', name: 'dyslexic_ai.tts');
-      rethrow;
+      // Do not rethrow, just log. This allows the app to continue even if TTS is broken.
+      // rethrow; 
     }
   }
 
