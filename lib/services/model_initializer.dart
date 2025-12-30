@@ -34,12 +34,15 @@ class ModelInitializer {
   static const Duration baseDelay = Duration(seconds: 2);
   static const Duration maxDelay = Duration(seconds: 30);
   static const String _crashDetectionKey = 'dyslexic_ai_model_init_in_progress';
+  static const String _gpuCrashCountKey = 'dyslexic_ai_gpu_crash_count';
+  static const int _maxGpuCrashRetries = 2; // After 2 GPU crashes, default to CPU
 
   // Removed _gemmaPlugin as we now use static FlutterGemma API
 
   int _currentAttempt = 0;
   InitializationStatus _status = InitializationStatus.notStarted;
   String? _lastError;
+  bool _skipGpuBackend = false;  // Set based on crash detection
 
   InitializationStatus get status => _status;
   String? get lastError => _lastError;
@@ -87,11 +90,23 @@ class ModelInitializer {
         name: 'dyslexic_ai.model_initializer');
     await clearGpuCache();
     
-    // Check if we crashed last time (for additional logging/diagnostics)
+    // Check if we crashed last time and update GPU crash counter
+    _skipGpuBackend = false;
+    int gpuCrashCount = prefs.getInt(_gpuCrashCountKey) ?? 0;
+    
     if (prefs.getBool(_crashDetectionKey) == true) {
+      gpuCrashCount++;
+      await prefs.setInt(_gpuCrashCountKey, gpuCrashCount);
       developer.log(
-          '⚠️ DETECTED CRASH: Initialization was interrupted previously.',
+          '⚠️ DETECTED CRASH: Initialization was interrupted previously. GPU crash count: $gpuCrashCount',
           name: 'dyslexic_ai.model_initializer');
+      
+      if (gpuCrashCount >= _maxGpuCrashRetries) {
+        developer.log(
+            '⚠️ GPU has crashed $_maxGpuCrashRetries+ times, switching to CPU-only mode',
+            name: 'dyslexic_ai.model_initializer');
+        _skipGpuBackend = true;
+      }
     }
 
     // Set crash marker - if we die after this, next run will know
@@ -117,6 +132,9 @@ class ModelInitializer {
           developer.log(
               '✅ Model initialization successful on attempt $_currentAttempt',
               name: 'dyslexic_ai.model_initializer');
+          
+          // Reset GPU crash counter on successful initialization
+          await prefs.setInt(_gpuCrashCountKey, 0);
 
           return InitializationResult(
             success: true,
@@ -229,7 +247,7 @@ class ModelInitializer {
             name: 'dyslexic_ai.model_initializer');
       }
 
-      final inferenceModel = await _createModelWithFallback();
+      final inferenceModel = await _createModelWithFallback(skipGpu: _skipGpuBackend);
       if (inferenceModel != null) {
         developer.log('✅ Model initialized successfully for inference',
             name: 'dyslexic_ai.model_initializer');
@@ -256,42 +274,23 @@ class ModelInitializer {
     }
   }
 
-  /// Create model with CPU first, then GPU fallback
-  /// Using CPU first because GPU initialization appears to be causing native crashes
-  Future<InferenceModel?> _createModelWithFallback() async {
-    // Try CPU backend first for stability
-    developer.log('🔄 Attempting CPU backend initialization first (for stability)...',
-        name: 'dyslexic_ai.model_initializer');
-    
-    try {
-      // Small delay to allow system resources to stabilize
-      await Future.delayed(const Duration(milliseconds: 500));
-      
-      developer.log('📊 Calling FlutterGemma.getActiveModel with CPU backend...',
+  /// Create model with GPU first, then CPU fallback
+  /// GPU provides faster inference but may fail on some devices
+  /// If skipGpu is true, go directly to CPU backend (used after multiple GPU crashes)
+  Future<InferenceModel?> _createModelWithFallback({bool skipGpu = false}) async {
+    if (skipGpu) {
+      developer.log('⚠️ Skipping GPU backend due to previous crashes, using CPU directly...',
           name: 'dyslexic_ai.model_initializer');
-          
-      final cpuModel = await FlutterGemma.getActiveModel(
-        preferredBackend: PreferredBackend.cpu,
-        maxTokens: 2048,
-        supportImage: true,
-        maxNumImages: 1,
-      );
-      
-      developer.log('✅ CPU backend initialized successfully!',
-          name: 'dyslexic_ai.model_initializer');
-      return cpuModel;
-    } catch (cpuError) {
-      developer.log('❌ CPU backend failed: $cpuError',
-          name: 'dyslexic_ai.model_initializer');
+      return await _initializeCpuBackend();
     }
     
-    // If CPU fails, try GPU as fallback
-    developer.log('🔄 Falling back to GPU backend...',
+    // Try GPU backend first for performance
+    developer.log('🎮 Attempting GPU backend initialization...',
         name: 'dyslexic_ai.model_initializer');
     
     try {
-      // Add delay before GPU initialization to allow memory cleanup
-      await Future.delayed(const Duration(seconds: 1));
+      // Small delay to allow system resources to stabilize after cache clear
+      await Future.delayed(const Duration(milliseconds: 500));
       
       developer.log('📊 Calling FlutterGemma.getActiveModel with GPU backend...',
           name: 'dyslexic_ai.model_initializer');
@@ -307,7 +306,56 @@ class ModelInitializer {
           name: 'dyslexic_ai.model_initializer');
       return gpuModel;
     } catch (gpuError) {
-      developer.log('❌ GPU backend also failed: $gpuError',
+      developer.log('❌ GPU backend failed: $gpuError',
+          name: 'dyslexic_ai.model_initializer');
+    }
+    
+    // If GPU fails, fall back to CPU
+    developer.log('🔄 Falling back to CPU backend...',
+        name: 'dyslexic_ai.model_initializer');
+    
+    try {
+      // Add delay before CPU initialization to allow memory cleanup from failed GPU attempt
+      await Future.delayed(const Duration(seconds: 1));
+      
+      developer.log('📊 Calling FlutterGemma.getActiveModel with CPU backend...',
+          name: 'dyslexic_ai.model_initializer');
+          
+      final cpuModel = await FlutterGemma.getActiveModel(
+        preferredBackend: PreferredBackend.cpu,
+        maxTokens: 2048,
+        supportImage: true,
+        maxNumImages: 1,
+      );
+      
+      developer.log('✅ CPU backend initialized successfully!',
+          name: 'dyslexic_ai.model_initializer');
+      return cpuModel;
+    } catch (cpuError) {
+      developer.log('❌ CPU backend also failed: $cpuError',
+          name: 'dyslexic_ai.model_initializer');
+      return null;
+    }
+  }
+  
+  /// Initialize CPU backend only
+  Future<InferenceModel?> _initializeCpuBackend() async {
+    try {
+      developer.log('📊 Calling FlutterGemma.getActiveModel with CPU backend...',
+          name: 'dyslexic_ai.model_initializer');
+          
+      final cpuModel = await FlutterGemma.getActiveModel(
+        preferredBackend: PreferredBackend.cpu,
+        maxTokens: 2048,
+        supportImage: true,
+        maxNumImages: 1,
+      );
+      
+      developer.log('✅ CPU backend initialized successfully!',
+          name: 'dyslexic_ai.model_initializer');
+      return cpuModel;
+    } catch (cpuError) {
+      developer.log('❌ CPU backend failed: $cpuError',
           name: 'dyslexic_ai.model_initializer');
       return null;
     }
