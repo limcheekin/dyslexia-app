@@ -8,11 +8,6 @@ import '../utils/inference_trace.dart';
 import 'global_session_manager.dart';
 import '../utils/inference_metrics.dart';
 
-// Session/context management constants - now handled by activity-based policies
-const int _maxContextTokens = 2048;
-const int _outputTokenCap = 128;
-const int _rolloverThreshold = _maxContextTokens - _outputTokenCap;
-
 /// Enhanced AI inference service with activity-based session management
 class AIInferenceService {
   final InferenceModel inferenceModel;

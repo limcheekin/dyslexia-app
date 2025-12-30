@@ -9,15 +9,15 @@ import '../controllers/learner_profile_store.dart';
 
 part 'adaptive_story_store.g.dart';
 
-class AdaptiveStoryStore = _AdaptiveStoryStore with _$AdaptiveStoryStore;
+class AdaptiveStoryStore = AdaptiveStoryStoreBase with _$AdaptiveStoryStore;
 
-abstract class _AdaptiveStoryStore with Store {
+abstract class AdaptiveStoryStoreBase with Store {
   final StoryService _storyService;
   final TextToSpeechService _ttsService;
   late final SessionLoggingService _sessionLogging;
   DateTime? _sessionStartTime;
 
-  _AdaptiveStoryStore({
+  AdaptiveStoryStoreBase({
     required StoryService storyService,
     required TextToSpeechService ttsService,
   })  : _storyService = storyService,

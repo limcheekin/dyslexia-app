@@ -8,108 +8,108 @@ part of 'sentence_fixer_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
+mixin _$SentenceFixerStore on SentenceFixerStoreBase, Store {
   Computed<bool>? _$hasCurrentSessionComputed;
 
   @override
   bool get hasCurrentSession => (_$hasCurrentSessionComputed ??= Computed<bool>(
           () => super.hasCurrentSession,
-          name: '_SentenceFixerStore.hasCurrentSession'))
+          name: 'SentenceFixerStoreBase.hasCurrentSession'))
       .value;
   Computed<bool>? _$hasCurrentSentenceComputed;
 
   @override
   bool get hasCurrentSentence => (_$hasCurrentSentenceComputed ??=
           Computed<bool>(() => super.hasCurrentSentence,
-              name: '_SentenceFixerStore.hasCurrentSentence'))
+              name: 'SentenceFixerStoreBase.hasCurrentSentence'))
       .value;
   Computed<SentenceWithErrors?>? _$currentSentenceComputed;
 
   @override
   SentenceWithErrors? get currentSentence => (_$currentSentenceComputed ??=
           Computed<SentenceWithErrors?>(() => super.currentSentence,
-              name: '_SentenceFixerStore.currentSentence'))
+              name: 'SentenceFixerStoreBase.currentSentence'))
       .value;
   Computed<bool>? _$isSessionCompletedComputed;
 
   @override
   bool get isSessionCompleted => (_$isSessionCompletedComputed ??=
           Computed<bool>(() => super.isSessionCompleted,
-              name: '_SentenceFixerStore.isSessionCompleted'))
+              name: 'SentenceFixerStoreBase.isSessionCompleted'))
       .value;
   Computed<bool>? _$canSubmitComputed;
 
   @override
   bool get canSubmit =>
       (_$canSubmitComputed ??= Computed<bool>(() => super.canSubmit,
-              name: '_SentenceFixerStore.canSubmit'))
+              name: 'SentenceFixerStoreBase.canSubmit'))
           .value;
   Computed<int>? _$selectedWordsCountComputed;
 
   @override
   int get selectedWordsCount => (_$selectedWordsCountComputed ??= Computed<int>(
           () => super.selectedWordsCount,
-          name: '_SentenceFixerStore.selectedWordsCount'))
+          name: 'SentenceFixerStoreBase.selectedWordsCount'))
       .value;
   Computed<double>? _$progressPercentageComputed;
 
   @override
   double get progressPercentage => (_$progressPercentageComputed ??=
           Computed<double>(() => super.progressPercentage,
-              name: '_SentenceFixerStore.progressPercentage'))
+              name: 'SentenceFixerStoreBase.progressPercentage'))
       .value;
   Computed<int>? _$currentSentenceNumberComputed;
 
   @override
   int get currentSentenceNumber => (_$currentSentenceNumberComputed ??=
           Computed<int>(() => super.currentSentenceNumber,
-              name: '_SentenceFixerStore.currentSentenceNumber'))
+              name: 'SentenceFixerStoreBase.currentSentenceNumber'))
       .value;
   Computed<int>? _$totalSentencesComputed;
 
   @override
   int get totalSentences =>
       (_$totalSentencesComputed ??= Computed<int>(() => super.totalSentences,
-              name: '_SentenceFixerStore.totalSentences'))
+              name: 'SentenceFixerStoreBase.totalSentences'))
           .value;
   Computed<int>? _$currentScoreComputed;
 
   @override
   int get currentScore =>
       (_$currentScoreComputed ??= Computed<int>(() => super.currentScore,
-              name: '_SentenceFixerStore.currentScore'))
+              name: 'SentenceFixerStoreBase.currentScore'))
           .value;
   Computed<int>? _$currentStreakComputed;
 
   @override
   int get currentStreak =>
       (_$currentStreakComputed ??= Computed<int>(() => super.currentStreak,
-              name: '_SentenceFixerStore.currentStreak'))
+              name: 'SentenceFixerStoreBase.currentStreak'))
           .value;
   Computed<bool>? _$isStreamingInProgressComputed;
 
   @override
   bool get isStreamingInProgress => (_$isStreamingInProgressComputed ??=
           Computed<bool>(() => super.isStreamingInProgress,
-              name: '_SentenceFixerStore.isStreamingInProgress'))
+              name: 'SentenceFixerStoreBase.isStreamingInProgress'))
       .value;
   Computed<String>? _$streamingStatusTextComputed;
 
   @override
   String get streamingStatusText => (_$streamingStatusTextComputed ??=
           Computed<String>(() => super.streamingStatusText,
-              name: '_SentenceFixerStore.streamingStatusText'))
+              name: 'SentenceFixerStoreBase.streamingStatusText'))
       .value;
   Computed<double>? _$streamingProgressComputed;
 
   @override
   double get streamingProgress => (_$streamingProgressComputed ??=
           Computed<double>(() => super.streamingProgress,
-              name: '_SentenceFixerStore.streamingProgress'))
+              name: 'SentenceFixerStoreBase.streamingProgress'))
       .value;
 
   late final _$currentSessionAtom =
-      Atom(name: '_SentenceFixerStore.currentSession', context: context);
+      Atom(name: 'SentenceFixerStoreBase.currentSession', context: context);
 
   @override
   SentenceFixerSession? get currentSession {
@@ -125,7 +125,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$selectedWordsAtom =
-      Atom(name: '_SentenceFixerStore.selectedWords', context: context);
+      Atom(name: 'SentenceFixerStoreBase.selectedWords', context: context);
 
   @override
   List<bool> get selectedWords {
@@ -141,7 +141,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$currentFeedbackAtom =
-      Atom(name: '_SentenceFixerStore.currentFeedback', context: context);
+      Atom(name: 'SentenceFixerStoreBase.currentFeedback', context: context);
 
   @override
   SentenceFixerFeedback? get currentFeedback {
@@ -157,7 +157,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$showFeedbackAtom =
-      Atom(name: '_SentenceFixerStore.showFeedback', context: context);
+      Atom(name: 'SentenceFixerStoreBase.showFeedback', context: context);
 
   @override
   bool get showFeedback {
@@ -173,7 +173,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$isLoadingAtom =
-      Atom(name: '_SentenceFixerStore.isLoading', context: context);
+      Atom(name: 'SentenceFixerStoreBase.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -189,7 +189,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$errorMessageAtom =
-      Atom(name: '_SentenceFixerStore.errorMessage', context: context);
+      Atom(name: 'SentenceFixerStoreBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -205,7 +205,8 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$timeSpentOnCurrentSentenceAtom = Atom(
-      name: '_SentenceFixerStore.timeSpentOnCurrentSentence', context: context);
+      name: 'SentenceFixerStoreBase.timeSpentOnCurrentSentence',
+      context: context);
 
   @override
   int get timeSpentOnCurrentSentence {
@@ -222,7 +223,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$statsAtom =
-      Atom(name: '_SentenceFixerStore.stats', context: context);
+      Atom(name: 'SentenceFixerStoreBase.stats', context: context);
 
   @override
   SentenceFixerStats get stats {
@@ -237,8 +238,8 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
     });
   }
 
-  late final _$isGeneratingSentencesAtom =
-      Atom(name: '_SentenceFixerStore.isGeneratingSentences', context: context);
+  late final _$isGeneratingSentencesAtom = Atom(
+      name: 'SentenceFixerStoreBase.isGeneratingSentences', context: context);
 
   @override
   bool get isGeneratingSentences {
@@ -255,7 +256,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$sentencesGeneratedAtom =
-      Atom(name: '_SentenceFixerStore.sentencesGenerated', context: context);
+      Atom(name: 'SentenceFixerStoreBase.sentencesGenerated', context: context);
 
   @override
   int get sentencesGenerated {
@@ -271,7 +272,8 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$totalSentencesToGenerateAtom = Atom(
-      name: '_SentenceFixerStore.totalSentencesToGenerate', context: context);
+      name: 'SentenceFixerStoreBase.totalSentencesToGenerate',
+      context: context);
 
   @override
   int get totalSentencesToGenerate {
@@ -288,7 +290,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$detailedFeedbackAtom =
-      Atom(name: '_SentenceFixerStore.detailedFeedback', context: context);
+      Atom(name: 'SentenceFixerStoreBase.detailedFeedback', context: context);
 
   @override
   String? get detailedFeedback {
@@ -304,7 +306,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$startNewSessionAsyncAction =
-      AsyncAction('_SentenceFixerStore.startNewSession', context: context);
+      AsyncAction('SentenceFixerStoreBase.startNewSession', context: context);
 
   @override
   Future<void> startNewSession(
@@ -318,7 +320,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$startNewSessionStreamingAsyncAction = AsyncAction(
-      '_SentenceFixerStore.startNewSessionStreaming',
+      'SentenceFixerStoreBase.startNewSessionStreaming',
       context: context);
 
   @override
@@ -334,7 +336,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$_generateSentencesInBackgroundAsyncAction = AsyncAction(
-      '_SentenceFixerStore._generateSentencesInBackground',
+      'SentenceFixerStoreBase._generateSentencesInBackground',
       context: context);
 
   @override
@@ -345,7 +347,7 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
   }
 
   late final _$startNewSessionLegacyAsyncAction = AsyncAction(
-      '_SentenceFixerStore.startNewSessionLegacy',
+      'SentenceFixerStoreBase.startNewSessionLegacy',
       context: context);
 
   @override
@@ -360,105 +362,105 @@ mixin _$SentenceFixerStore on _SentenceFixerStore, Store {
             profile: profile));
   }
 
-  late final _$_SentenceFixerStoreActionController =
-      ActionController(name: '_SentenceFixerStore', context: context);
+  late final _$SentenceFixerStoreBaseActionController =
+      ActionController(name: 'SentenceFixerStoreBase', context: context);
 
   @override
   void toggleWordSelection(int position) {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.toggleWordSelection');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.toggleWordSelection');
     try {
       return super.toggleWordSelection(position);
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void submitAnswer() {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.submitAnswer');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.submitAnswer');
     try {
       return super.submitAnswer();
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void nextSentence() {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.nextSentence');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.nextSentence');
     try {
       return super.nextSentence();
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void retryCurrentSentence() {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.retryCurrentSentence');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.retryCurrentSentence');
     try {
       return super.retryCurrentSentence();
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void skipCurrentSentence() {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.skipCurrentSentence');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.skipCurrentSentence');
     try {
       return super.skipCurrentSentence();
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void pauseSession() {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.pauseSession');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.pauseSession');
     try {
       return super.pauseSession();
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void resumeSession() {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.resumeSession');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.resumeSession');
     try {
       return super.resumeSession();
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void endSession() {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.endSession');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.endSession');
     try {
       return super.endSession();
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearError() {
-    final _$actionInfo = _$_SentenceFixerStoreActionController.startAction(
-        name: '_SentenceFixerStore.clearError');
+    final _$actionInfo = _$SentenceFixerStoreBaseActionController.startAction(
+        name: 'SentenceFixerStoreBase.clearError');
     try {
       return super.clearError();
     } finally {
-      _$_SentenceFixerStoreActionController.endAction(_$actionInfo);
+      _$SentenceFixerStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

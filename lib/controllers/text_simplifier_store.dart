@@ -7,13 +7,13 @@ import '../utils/service_locator.dart';
 
 part 'text_simplifier_store.g.dart';
 
-class TextSimplifierStore = _TextSimplifierStore with _$TextSimplifierStore;
+class TextSimplifierStore = TextSimplifierStoreBase with _$TextSimplifierStore;
 
-abstract class _TextSimplifierStore with Store {
+abstract class TextSimplifierStoreBase with Store {
   late final OcrService _ocrService;
   late final ImagePicker _imagePicker;
 
-  _TextSimplifierStore() {
+  TextSimplifierStoreBase() {
     _ocrService = getIt<OcrService>();
     _imagePicker = ImagePicker();
   }

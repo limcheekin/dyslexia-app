@@ -366,119 +366,6 @@ class AIPhonicsGenerationService {
   }
 
 
-
-
-
-
-
-
-
-  /// Generate static fallback sound set
-  SoundSet _generateStaticSoundSet(String phoneme, int difficulty, int index) {
-    final staticWords = _getStaticWordsForPhoneme(phoneme);
-    final wordCount = _getWordCountForDifficulty(difficulty);
-    
-    // Ensure we have 1 correct word
-    final correctWords = staticWords.where((w) => w.isCorrect).toList();
-    final incorrectWords = staticWords.where((w) => !w.isCorrect).toList();
-    
-    final gameWords = <WordOption>[];
-    
-    // Add 1 correct word
-    if (correctWords.isNotEmpty) {
-      gameWords.add(correctWords.first);
-    }
-    
-    // Add remaining incorrect words, shuffled
-    incorrectWords.shuffle(_random);
-    gameWords.addAll(incorrectWords.take(wordCount - 1));
-    
-    // Final shuffle for game presentation
-    gameWords.shuffle(_random);
-    
-    return SoundSet(
-      id: 'static_${phoneme}_$index',
-      name: '${phoneme.toUpperCase()} Sounds',
-      sound: _getPhonemeSound(phoneme),
-      phoneme: phoneme,
-      type: _getPhonemeType(phoneme),
-      difficulty: difficulty,
-      words: gameWords,
-      description: _getStaticPronunciationHint(phoneme),
-    );
-  }
-
-  /// Get static words for phoneme (fallback content)
-  List<WordOption> _getStaticWordsForPhoneme(String phoneme) {
-    final staticWordMap = {
-      'b': [
-        WordOption(word: 'ball', imageUrl: '', isCorrect: true, phoneme: 'b'),
-        WordOption(word: 'cat', imageUrl: '', isCorrect: false, phoneme: 'c'),
-        WordOption(word: 'dog', imageUrl: '', isCorrect: false, phoneme: 'd'),
-        WordOption(word: 'fish', imageUrl: '', isCorrect: false, phoneme: 'f'),
-        WordOption(word: 'sun', imageUrl: '', isCorrect: false, phoneme: 's'),
-      ],
-      'c': [
-        WordOption(word: 'cat', imageUrl: '', isCorrect: true, phoneme: 'c'),
-        WordOption(word: 'ball', imageUrl: '', isCorrect: false, phoneme: 'b'),
-        WordOption(word: 'dog', imageUrl: '', isCorrect: false, phoneme: 'd'),
-        WordOption(word: 'fish', imageUrl: '', isCorrect: false, phoneme: 'f'),
-        WordOption(word: 'hat', imageUrl: '', isCorrect: false, phoneme: 'h'),
-      ],
-      'd': [
-        WordOption(word: 'dog', imageUrl: '', isCorrect: true, phoneme: 'd'),
-        WordOption(word: 'ball', imageUrl: '', isCorrect: false, phoneme: 'b'),
-        WordOption(word: 'cat', imageUrl: '', isCorrect: false, phoneme: 'c'),
-        WordOption(word: 'fish', imageUrl: '', isCorrect: false, phoneme: 'f'),
-        WordOption(word: 'sun', imageUrl: '', isCorrect: false, phoneme: 's'),
-      ],
-      'f': [
-        WordOption(word: 'fish', imageUrl: '', isCorrect: true, phoneme: 'f'),
-        WordOption(word: 'ball', imageUrl: '', isCorrect: false, phoneme: 'b'),
-        WordOption(word: 'cat', imageUrl: '', isCorrect: false, phoneme: 'c'),
-        WordOption(word: 'dog', imageUrl: '', isCorrect: false, phoneme: 'd'),
-        WordOption(word: 'hat', imageUrl: '', isCorrect: false, phoneme: 'h'),
-      ],
-      'g': [
-        WordOption(word: 'goat', imageUrl: '', isCorrect: true, phoneme: 'g'),
-        WordOption(word: 'ball', imageUrl: '', isCorrect: false, phoneme: 'b'),
-        WordOption(word: 'cat', imageUrl: '', isCorrect: false, phoneme: 'c'),
-        WordOption(word: 'dog', imageUrl: '', isCorrect: false, phoneme: 'd'),
-        WordOption(word: 'fish', imageUrl: '', isCorrect: false, phoneme: 'f'),
-      ],
-      // Add common digraphs and blends
-      'ch': [
-        WordOption(word: 'chair', imageUrl: '', isCorrect: true, phoneme: 'ch'),
-        WordOption(word: 'ship', imageUrl: '', isCorrect: false, phoneme: 'sh'),
-        WordOption(word: 'ball', imageUrl: '', isCorrect: false, phoneme: 'b'),
-        WordOption(word: 'cat', imageUrl: '', isCorrect: false, phoneme: 'c'),
-        WordOption(word: 'dog', imageUrl: '', isCorrect: false, phoneme: 'd'),
-      ],
-      'sh': [
-        WordOption(word: 'ship', imageUrl: '', isCorrect: true, phoneme: 'sh'),
-        WordOption(word: 'chair', imageUrl: '', isCorrect: false, phoneme: 'ch'),
-        WordOption(word: 'think', imageUrl: '', isCorrect: false, phoneme: 'th'),
-        WordOption(word: 'ball', imageUrl: '', isCorrect: false, phoneme: 'b'),
-        WordOption(word: 'cat', imageUrl: '', isCorrect: false, phoneme: 'c'),
-      ],
-      'th': [
-        WordOption(word: 'think', imageUrl: '', isCorrect: true, phoneme: 'th'),
-        WordOption(word: 'chair', imageUrl: '', isCorrect: false, phoneme: 'ch'),
-        WordOption(word: 'ship', imageUrl: '', isCorrect: false, phoneme: 'sh'),
-        WordOption(word: 'ball', imageUrl: '', isCorrect: false, phoneme: 'b'),
-        WordOption(word: 'cat', imageUrl: '', isCorrect: false, phoneme: 'c'),
-      ],
-    };
-    
-    return staticWordMap[phoneme] ?? [
-      WordOption(word: 'word', imageUrl: '', isCorrect: true, phoneme: phoneme),
-      WordOption(word: 'cat', imageUrl: '', isCorrect: false, phoneme: 'c'),
-      WordOption(word: 'dog', imageUrl: '', isCorrect: false, phoneme: 'd'),
-      WordOption(word: 'fish', imageUrl: '', isCorrect: false, phoneme: 'f'),
-      WordOption(word: 'sun', imageUrl: '', isCorrect: false, phoneme: 's'),
-    ];
-  }
-
   /// Helper methods for phoneme properties
   String _getPhonemeSound(String phoneme) {
     final soundMap = {
@@ -533,22 +420,6 @@ class AIPhonicsGenerationService {
     }
   }
 
-
-
-  /// Generate fallback sound sets for emergency situations
-  List<SoundSet> _generateFallbackSoundSets(int rounds, int difficulty) {
-    final basicPhonemes = ['b', 'c', 'd', 'f', 'g'];
-    final soundSets = <SoundSet>[];
-    
-    for (int i = 0; i < rounds && i < basicPhonemes.length; i++) {
-      soundSets.add(_generateStaticSoundSet(basicPhonemes[i], difficulty, i));
-    }
-    
-    return soundSets;
-  }
-
-
-
   /// Clear word history for a phoneme (useful for testing or reset)
   void clearWordHistory([String? phoneme]) {
     if (phoneme != null) {
@@ -581,4 +452,4 @@ class AIPhonicsGenerationService {
     // Consonants: word should start with the consonant
     return cleanWord.startsWith(cleanPhoneme);
   }
-} 
+}

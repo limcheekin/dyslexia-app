@@ -10,15 +10,15 @@ import '../utils/service_locator.dart';
 
 part 'sentence_fixer_store.g.dart';
 
-class SentenceFixerStore = _SentenceFixerStore with _$SentenceFixerStore;
+class SentenceFixerStore = SentenceFixerStoreBase with _$SentenceFixerStore;
 
-abstract class _SentenceFixerStore with Store {
+abstract class SentenceFixerStoreBase with Store {
   late final SentenceFixerService _sentenceFixerService;
   late final SessionLoggingService _sessionLoggingService;
   
   Timer? _sessionTimer;
 
-  _SentenceFixerStore() {
+  SentenceFixerStoreBase() {
     _sentenceFixerService = SentenceFixerService();
     _sessionLoggingService = getIt<SessionLoggingService>();
   }

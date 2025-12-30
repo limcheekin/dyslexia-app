@@ -35,7 +35,7 @@ class OcrService {
   
   /// Main OCR method with simple error handling
   Future<OCRResult> scanImage(File imageFile) async {
-      try {
+    try {
       developer.log('Starting OCR scan for image: ${imageFile.path}', name: 'dyslexic_ai.ocr');
         
       // Simple image processing
@@ -144,11 +144,11 @@ class OcrService {
       
       developer.log('OCR session: ${aiService.getSessionDebugInfo()}', name: 'dyslexic_ai.ocr');
       
-              // Load OCR prompt from template
-        final prompt = await PromptLoader.load('ocr', 'simple_extraction.tmpl');
+      // Load OCR prompt from template
+      final prompt = await PromptLoader.load('ocr', 'simple_extraction.tmpl');
 
-        // Use the new multimodal response method which handles OCR sessions properly
-        final response = await aiService.generateMultimodalResponse(prompt, imageBytes);
+      // Use the new multimodal response method which handles OCR sessions properly
+      final response = await aiService.generateMultimodalResponse(prompt, imageBytes);
       developer.log('OCR response received: ${response.length} chars', name: 'dyslexic_ai.ocr');
       
       final extractedText = response.trim();
@@ -161,9 +161,6 @@ class OcrService {
           error: 'No text could be extracted from the image.',
         );
       }
-      
-      // Simple confidence estimation based on text length and character diversity
-      final confidence = _estimateConfidence(extractedText);
       
       return OCRResult(
         text: extractedText,
@@ -188,30 +185,10 @@ class OcrService {
       );
     }
   }
-
-  /// Simple confidence estimation
-  double _estimateConfidence(String text) {
-    if (text.isEmpty) return 0.0;
-      
-    // Basic heuristics for confidence
-    double confidence = 0.7; // Base confidence
-    
-    // Longer text generally means better extraction
-    if (text.length > 50) confidence += 0.1;
-    if (text.length > 100) confidence += 0.1;
-    
-    // Presence of common words increases confidence
-    final commonWords = ['the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'had', 'her', 'was', 'one', 'our', 'out', 'day', 'get', 'has', 'him', 'his', 'how', 'its', 'may', 'new', 'now', 'old', 'see', 'two', 'who', 'boy', 'did', 'man', 'way', 'too'];
-    final lowerText = text.toLowerCase();
-    final foundCommonWords = commonWords.where((word) => lowerText.contains(word)).length;
-    confidence += (foundCommonWords / commonWords.length) * 0.2;
-    
-    return confidence.clamp(0.0, 1.0);
-    }
   
   /// Dispose method for cleanup
   Future<void> dispose() async {
     // Session cleanup is now handled by AIInferenceService
     developer.log('OCR service disposed', name: 'dyslexic_ai.ocr');
   }
-} 
+}

@@ -537,9 +537,6 @@ class _AdaptiveStoryScreenState extends State<AdaptiveStoryScreen> {
         title = 'Question:';
         questionText = question.sentence;
         break;
-      default:
-        title = 'Question:';
-        questionText = question.sentence;
     }
 
     return Card(

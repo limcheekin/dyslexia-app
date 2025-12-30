@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'dart:math';
 
 class FunLoadingWidget extends StatefulWidget {
   final String title;
@@ -28,7 +27,6 @@ class _FunLoadingWidgetState extends State<FunLoadingWidget>
     with TickerProviderStateMixin {
   int _currentMessageIndex = 0;
   Timer? _messageTimer;
-  final Random _random = Random();
   
   late AnimationController _fadeController;
   late AnimationController _bounceController;

@@ -7,9 +7,9 @@ import '../utils/service_locator.dart';
 
 part 'session_log_store.g.dart';
 
-class SessionLogStore = _SessionLogStore with _$SessionLogStore;
+class SessionLogStore = SessionLogStoreBase with _$SessionLogStore;
 
-abstract class _SessionLogStore with Store {
+abstract class SessionLogStoreBase with Store {
   static const String _sessionLogsKey = 'dyslexic_ai_session_logs';
   static const int maxStoredLogs = 50;
 

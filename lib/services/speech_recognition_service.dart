@@ -301,7 +301,7 @@ class SpeechRecognitionService {
     }
   }
 
-  void _onResult(result) {
+  void _onResult(dynamic result) {
     if (_isDisposed) return;
     
     developer.log('🎤 Speech Result: "${result.recognizedWords}" (final: ${result.finalResult}, confidence: ${result.confidence ?? "unknown"})', name: 'dyslexic_ai.speech');
@@ -324,7 +324,7 @@ class SpeechRecognitionService {
     }
   }
 
-  void _onError(error) {
+  void _onError(dynamic error) {
     if (_isDisposed) return;
     
     developer.log('🎤 Speech error: $error', name: 'dyslexic_ai.speech');
@@ -345,7 +345,7 @@ class SpeechRecognitionService {
     _statusController?.add(RecordingStatus.error);
   }
 
-  void _onStatus(status) {
+  void _onStatus(String status) {
     if (_isDisposed) return;
     
     developer.log('🎤 Speech status: $status', name: 'dyslexic_ai.speech');

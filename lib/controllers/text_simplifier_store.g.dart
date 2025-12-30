@@ -8,38 +8,38 @@ part of 'text_simplifier_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
+mixin _$TextSimplifierStore on TextSimplifierStoreBase, Store {
   Computed<bool>? _$hasOriginalTextComputed;
 
   @override
   bool get hasOriginalText =>
       (_$hasOriginalTextComputed ??= Computed<bool>(() => super.hasOriginalText,
-              name: '_TextSimplifierStore.hasOriginalText'))
+              name: 'TextSimplifierStoreBase.hasOriginalText'))
           .value;
   Computed<bool>? _$hasSimplifiedTextComputed;
 
   @override
   bool get hasSimplifiedText => (_$hasSimplifiedTextComputed ??= Computed<bool>(
           () => super.hasSimplifiedText,
-          name: '_TextSimplifierStore.hasSimplifiedText'))
+          name: 'TextSimplifierStoreBase.hasSimplifiedText'))
       .value;
   Computed<bool>? _$canSimplifyComputed;
 
   @override
   bool get canSimplify =>
       (_$canSimplifyComputed ??= Computed<bool>(() => super.canSimplify,
-              name: '_TextSimplifierStore.canSimplify'))
+              name: 'TextSimplifierStoreBase.canSimplify'))
           .value;
   Computed<bool>? _$canSimplifyAgainComputed;
 
   @override
   bool get canSimplifyAgain => (_$canSimplifyAgainComputed ??= Computed<bool>(
           () => super.canSimplifyAgain,
-          name: '_TextSimplifierStore.canSimplifyAgain'))
+          name: 'TextSimplifierStoreBase.canSimplifyAgain'))
       .value;
 
   late final _$originalTextAtom =
-      Atom(name: '_TextSimplifierStore.originalText', context: context);
+      Atom(name: 'TextSimplifierStoreBase.originalText', context: context);
 
   @override
   String get originalText {
@@ -55,7 +55,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$simplifiedTextAtom =
-      Atom(name: '_TextSimplifierStore.simplifiedText', context: context);
+      Atom(name: 'TextSimplifierStoreBase.simplifiedText', context: context);
 
   @override
   String get simplifiedText {
@@ -71,7 +71,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$isSimplifyingAtom =
-      Atom(name: '_TextSimplifierStore.isSimplifying', context: context);
+      Atom(name: 'TextSimplifierStoreBase.isSimplifying', context: context);
 
   @override
   bool get isSimplifying {
@@ -87,7 +87,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$errorMessageAtom =
-      Atom(name: '_TextSimplifierStore.errorMessage', context: context);
+      Atom(name: 'TextSimplifierStoreBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -102,8 +102,8 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
     });
   }
 
-  late final _$selectedReadingLevelAtom =
-      Atom(name: '_TextSimplifierStore.selectedReadingLevel', context: context);
+  late final _$selectedReadingLevelAtom = Atom(
+      name: 'TextSimplifierStoreBase.selectedReadingLevel', context: context);
 
   @override
   String get selectedReadingLevel {
@@ -120,7 +120,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$explainChangesAtom =
-      Atom(name: '_TextSimplifierStore.explainChanges', context: context);
+      Atom(name: 'TextSimplifierStoreBase.explainChanges', context: context);
 
   @override
   bool get explainChanges {
@@ -136,7 +136,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$sideBySideViewAtom =
-      Atom(name: '_TextSimplifierStore.sideBySideView', context: context);
+      Atom(name: 'TextSimplifierStoreBase.sideBySideView', context: context);
 
   @override
   bool get sideBySideView {
@@ -152,7 +152,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$defineKeyTermsAtom =
-      Atom(name: '_TextSimplifierStore.defineKeyTerms', context: context);
+      Atom(name: 'TextSimplifierStoreBase.defineKeyTerms', context: context);
 
   @override
   bool get defineKeyTerms {
@@ -168,7 +168,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$addVisualsAtom =
-      Atom(name: '_TextSimplifierStore.addVisuals', context: context);
+      Atom(name: 'TextSimplifierStoreBase.addVisuals', context: context);
 
   @override
   bool get addVisuals {
@@ -184,7 +184,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$isProcessingOCRAtom =
-      Atom(name: '_TextSimplifierStore.isProcessingOCR', context: context);
+      Atom(name: 'TextSimplifierStoreBase.isProcessingOCR', context: context);
 
   @override
   bool get isProcessingOCR {
@@ -200,7 +200,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$simplificationHistoryAtom = Atom(
-      name: '_TextSimplifierStore.simplificationHistory', context: context);
+      name: 'TextSimplifierStoreBase.simplificationHistory', context: context);
 
   @override
   List<String> get simplificationHistory {
@@ -217,7 +217,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$wordDefinitionsAtom =
-      Atom(name: '_TextSimplifierStore.wordDefinitions', context: context);
+      Atom(name: 'TextSimplifierStoreBase.wordDefinitions', context: context);
 
   @override
   Map<String, String> get wordDefinitions {
@@ -233,7 +233,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$isSpeakingAtom =
-      Atom(name: '_TextSimplifierStore.isSpeaking', context: context);
+      Atom(name: 'TextSimplifierStoreBase.isSpeaking', context: context);
 
   @override
   bool get isSpeaking {
@@ -249,7 +249,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$wordBeingDefinedAtom =
-      Atom(name: '_TextSimplifierStore.wordBeingDefined', context: context);
+      Atom(name: 'TextSimplifierStoreBase.wordBeingDefined', context: context);
 
   @override
   String? get wordBeingDefined {
@@ -265,7 +265,7 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
   }
 
   late final _$pickImageFromGalleryAsyncAction = AsyncAction(
-      '_TextSimplifierStore.pickImageFromGallery',
+      'TextSimplifierStoreBase.pickImageFromGallery',
       context: context);
 
   @override
@@ -274,226 +274,226 @@ mixin _$TextSimplifierStore on _TextSimplifierStore, Store {
         .run(() => super.pickImageFromGallery());
   }
 
-  late final _$_TextSimplifierStoreActionController =
-      ActionController(name: '_TextSimplifierStore', context: context);
+  late final _$TextSimplifierStoreBaseActionController =
+      ActionController(name: 'TextSimplifierStoreBase', context: context);
 
   @override
   void setOriginalText(String text) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setOriginalText');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setOriginalText');
     try {
       return super.setOriginalText(text);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setSimplifiedText(String text) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setSimplifiedText');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setSimplifiedText');
     try {
       return super.setSimplifiedText(text);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearSimplifiedText() {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.clearSimplifiedText');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.clearSimplifiedText');
     try {
       return super.clearSimplifiedText();
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setIsSimplifying(bool value) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setIsSimplifying');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setIsSimplifying');
     try {
       return super.setIsSimplifying(value);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setErrorMessage(String? message) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setErrorMessage');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setErrorMessage');
     try {
       return super.setErrorMessage(message);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setSelectedReadingLevel(String level) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setSelectedReadingLevel');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setSelectedReadingLevel');
     try {
       return super.setSelectedReadingLevel(level);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setExplainChanges(bool value) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setExplainChanges');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setExplainChanges');
     try {
       return super.setExplainChanges(value);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setSideBySideView(bool value) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setSideBySideView');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setSideBySideView');
     try {
       return super.setSideBySideView(value);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setDefineKeyTerms(bool value) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setDefineKeyTerms');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setDefineKeyTerms');
     try {
       return super.setDefineKeyTerms(value);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setAddVisuals(bool value) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setAddVisuals');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setAddVisuals');
     try {
       return super.setAddVisuals(value);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setIsProcessingOCR(bool value) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setIsProcessingOCR');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setIsProcessingOCR');
     try {
       return super.setIsProcessingOCR(value);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void addWordDefinition(String word, String definition) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.addWordDefinition');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.addWordDefinition');
     try {
       return super.addWordDefinition(word, definition);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setIsSpeaking(bool value) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setIsSpeaking');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setIsSpeaking');
     try {
       return super.setIsSpeaking(value);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setWordBeingDefined(String? word) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setWordBeingDefined');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setWordBeingDefined');
     try {
       return super.setWordBeingDefined(word);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearAll() {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.clearAll');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.clearAll');
     try {
       return super.clearAll();
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void pasteFromClipboard(String clipboardText) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.pasteFromClipboard');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.pasteFromClipboard');
     try {
       return super.pasteFromClipboard(clipboardText);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void setOCRText(String ocrText) {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.setOCRText');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.setOCRText');
     try {
       return super.setOCRText(ocrText);
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearWordDefinitions() {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.clearWordDefinitions');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.clearWordDefinitions');
     try {
       return super.clearWordDefinitions();
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearSimplificationHistory() {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.clearSimplificationHistory');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.clearSimplificationHistory');
     try {
       return super.clearSimplificationHistory();
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearCachedData() {
-    final _$actionInfo = _$_TextSimplifierStoreActionController.startAction(
-        name: '_TextSimplifierStore.clearCachedData');
+    final _$actionInfo = _$TextSimplifierStoreBaseActionController.startAction(
+        name: 'TextSimplifierStoreBase.clearCachedData');
     try {
       return super.clearCachedData();
     } finally {
-      _$_TextSimplifierStoreActionController.endAction(_$actionInfo);
+      _$TextSimplifierStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

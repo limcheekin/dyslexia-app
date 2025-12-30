@@ -8,52 +8,52 @@ part of 'word_doctor_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$WordDoctorStore on _WordDoctorStore, Store {
+mixin _$WordDoctorStore on WordDoctorStoreBase, Store {
   Computed<bool>? _$canAnalyzeComputed;
 
   @override
   bool get canAnalyze =>
       (_$canAnalyzeComputed ??= Computed<bool>(() => super.canAnalyze,
-              name: '_WordDoctorStore.canAnalyze'))
+              name: 'WordDoctorStoreBase.canAnalyze'))
           .value;
   Computed<bool>? _$canScanImageComputed;
 
   @override
   bool get canScanImage =>
       (_$canScanImageComputed ??= Computed<bool>(() => super.canScanImage,
-              name: '_WordDoctorStore.canScanImage'))
+              name: 'WordDoctorStoreBase.canScanImage'))
           .value;
   Computed<bool>? _$hasCurrentAnalysisComputed;
 
   @override
   bool get hasCurrentAnalysis => (_$hasCurrentAnalysisComputed ??=
           Computed<bool>(() => super.hasCurrentAnalysis,
-              name: '_WordDoctorStore.hasCurrentAnalysis'))
+              name: 'WordDoctorStoreBase.hasCurrentAnalysis'))
       .value;
   Computed<bool>? _$isCurrentWordSavedComputed;
 
   @override
   bool get isCurrentWordSaved => (_$isCurrentWordSavedComputed ??=
           Computed<bool>(() => super.isCurrentWordSaved,
-              name: '_WordDoctorStore.isCurrentWordSaved'))
+              name: 'WordDoctorStoreBase.isCurrentWordSaved'))
       .value;
   Computed<int>? _$savedWordsCountComputed;
 
   @override
   int get savedWordsCount =>
       (_$savedWordsCountComputed ??= Computed<int>(() => super.savedWordsCount,
-              name: '_WordDoctorStore.savedWordsCount'))
+              name: 'WordDoctorStoreBase.savedWordsCount'))
           .value;
   Computed<int>? _$recentWordsCountComputed;
 
   @override
   int get recentWordsCount => (_$recentWordsCountComputed ??= Computed<int>(
           () => super.recentWordsCount,
-          name: '_WordDoctorStore.recentWordsCount'))
+          name: 'WordDoctorStoreBase.recentWordsCount'))
       .value;
 
   late final _$currentAnalysisAtom =
-      Atom(name: '_WordDoctorStore.currentAnalysis', context: context);
+      Atom(name: 'WordDoctorStoreBase.currentAnalysis', context: context);
 
   @override
   WordAnalysis? get currentAnalysis {
@@ -69,7 +69,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$savedWordsAtom =
-      Atom(name: '_WordDoctorStore.savedWords', context: context);
+      Atom(name: 'WordDoctorStoreBase.savedWords', context: context);
 
   @override
   ObservableList<WordAnalysis> get savedWords {
@@ -85,7 +85,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$recentWordsAtom =
-      Atom(name: '_WordDoctorStore.recentWords', context: context);
+      Atom(name: 'WordDoctorStoreBase.recentWords', context: context);
 
   @override
   ObservableList<WordAnalysis> get recentWords {
@@ -101,7 +101,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$isAnalyzingAtom =
-      Atom(name: '_WordDoctorStore.isAnalyzing', context: context);
+      Atom(name: 'WordDoctorStoreBase.isAnalyzing', context: context);
 
   @override
   bool get isAnalyzing {
@@ -117,7 +117,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$isLoadingAtom =
-      Atom(name: '_WordDoctorStore.isLoading', context: context);
+      Atom(name: 'WordDoctorStoreBase.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -133,7 +133,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$errorMessageAtom =
-      Atom(name: '_WordDoctorStore.errorMessage', context: context);
+      Atom(name: 'WordDoctorStoreBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -149,7 +149,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$inputWordAtom =
-      Atom(name: '_WordDoctorStore.inputWord', context: context);
+      Atom(name: 'WordDoctorStoreBase.inputWord', context: context);
 
   @override
   String get inputWord {
@@ -165,7 +165,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$isScanningAtom =
-      Atom(name: '_WordDoctorStore.isScanning', context: context);
+      Atom(name: 'WordDoctorStoreBase.isScanning', context: context);
 
   @override
   bool get isScanning {
@@ -181,7 +181,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$isProcessingOCRAtom =
-      Atom(name: '_WordDoctorStore.isProcessingOCR', context: context);
+      Atom(name: 'WordDoctorStoreBase.isProcessingOCR', context: context);
 
   @override
   bool get isProcessingOCR {
@@ -197,7 +197,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$ocrExtractedWordAtom =
-      Atom(name: '_WordDoctorStore.ocrExtractedWord', context: context);
+      Atom(name: 'WordDoctorStoreBase.ocrExtractedWord', context: context);
 
   @override
   String? get ocrExtractedWord {
@@ -213,7 +213,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$analyzeCurrentWordAsyncAction =
-      AsyncAction('_WordDoctorStore.analyzeCurrentWord', context: context);
+      AsyncAction('WordDoctorStoreBase.analyzeCurrentWord', context: context);
 
   @override
   Future<void> analyzeCurrentWord() {
@@ -222,7 +222,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$analyzeWordAsyncAction =
-      AsyncAction('_WordDoctorStore.analyzeWord', context: context);
+      AsyncAction('WordDoctorStoreBase.analyzeWord', context: context);
 
   @override
   Future<void> analyzeWord(String word) {
@@ -230,7 +230,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$reAnalyzeWordAsyncAction =
-      AsyncAction('_WordDoctorStore.reAnalyzeWord', context: context);
+      AsyncAction('WordDoctorStoreBase.reAnalyzeWord', context: context);
 
   @override
   Future<void> reAnalyzeWord(WordAnalysis analysis) {
@@ -238,7 +238,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$speakSyllableAsyncAction =
-      AsyncAction('_WordDoctorStore.speakSyllable', context: context);
+      AsyncAction('WordDoctorStoreBase.speakSyllable', context: context);
 
   @override
   Future<void> speakSyllable(String syllable) {
@@ -246,7 +246,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$speakWordAsyncAction =
-      AsyncAction('_WordDoctorStore.speakWord', context: context);
+      AsyncAction('WordDoctorStoreBase.speakWord', context: context);
 
   @override
   Future<void> speakWord(String word) {
@@ -254,7 +254,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$speakExampleSentenceAsyncAction =
-      AsyncAction('_WordDoctorStore.speakExampleSentence', context: context);
+      AsyncAction('WordDoctorStoreBase.speakExampleSentence', context: context);
 
   @override
   Future<void> speakExampleSentence(String sentence) {
@@ -263,7 +263,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$saveCurrentWordAsyncAction =
-      AsyncAction('_WordDoctorStore.saveCurrentWord', context: context);
+      AsyncAction('WordDoctorStoreBase.saveCurrentWord', context: context);
 
   @override
   Future<void> saveCurrentWord() {
@@ -271,7 +271,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$removeSavedWordAsyncAction =
-      AsyncAction('_WordDoctorStore.removeSavedWord', context: context);
+      AsyncAction('WordDoctorStoreBase.removeSavedWord', context: context);
 
   @override
   Future<void> removeSavedWord(String word) {
@@ -279,7 +279,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$_loadSavedWordsAsyncAction =
-      AsyncAction('_WordDoctorStore._loadSavedWords', context: context);
+      AsyncAction('WordDoctorStoreBase._loadSavedWords', context: context);
 
   @override
   Future<void> _loadSavedWords() {
@@ -287,7 +287,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$_loadRecentWordsAsyncAction =
-      AsyncAction('_WordDoctorStore._loadRecentWords', context: context);
+      AsyncAction('WordDoctorStoreBase._loadRecentWords', context: context);
 
   @override
   Future<void> _loadRecentWords() {
@@ -295,7 +295,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$clearRecentWordsAsyncAction =
-      AsyncAction('_WordDoctorStore.clearRecentWords', context: context);
+      AsyncAction('WordDoctorStoreBase.clearRecentWords', context: context);
 
   @override
   Future<void> clearRecentWords() {
@@ -303,7 +303,7 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$scanWordFromGalleryAsyncAction =
-      AsyncAction('_WordDoctorStore.scanWordFromGallery', context: context);
+      AsyncAction('WordDoctorStoreBase.scanWordFromGallery', context: context);
 
   @override
   Future<void> scanWordFromGallery() {
@@ -312,57 +312,57 @@ mixin _$WordDoctorStore on _WordDoctorStore, Store {
   }
 
   late final _$getOCRStatusAsyncAction =
-      AsyncAction('_WordDoctorStore.getOCRStatus', context: context);
+      AsyncAction('WordDoctorStoreBase.getOCRStatus', context: context);
 
   @override
   Future<String> getOCRStatus() {
     return _$getOCRStatusAsyncAction.run(() => super.getOCRStatus());
   }
 
-  late final _$_WordDoctorStoreActionController =
-      ActionController(name: '_WordDoctorStore', context: context);
+  late final _$WordDoctorStoreBaseActionController =
+      ActionController(name: 'WordDoctorStoreBase', context: context);
 
   @override
   void setInputWord(String word) {
-    final _$actionInfo = _$_WordDoctorStoreActionController.startAction(
-        name: '_WordDoctorStore.setInputWord');
+    final _$actionInfo = _$WordDoctorStoreBaseActionController.startAction(
+        name: 'WordDoctorStoreBase.setInputWord');
     try {
       return super.setInputWord(word);
     } finally {
-      _$_WordDoctorStoreActionController.endAction(_$actionInfo);
+      _$WordDoctorStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearCurrentAnalysis() {
-    final _$actionInfo = _$_WordDoctorStoreActionController.startAction(
-        name: '_WordDoctorStore.clearCurrentAnalysis');
+    final _$actionInfo = _$WordDoctorStoreBaseActionController.startAction(
+        name: 'WordDoctorStoreBase.clearCurrentAnalysis');
     try {
       return super.clearCurrentAnalysis();
     } finally {
-      _$_WordDoctorStoreActionController.endAction(_$actionInfo);
+      _$WordDoctorStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearError() {
-    final _$actionInfo = _$_WordDoctorStoreActionController.startAction(
-        name: '_WordDoctorStore.clearError');
+    final _$actionInfo = _$WordDoctorStoreBaseActionController.startAction(
+        name: 'WordDoctorStoreBase.clearError');
     try {
       return super.clearError();
     } finally {
-      _$_WordDoctorStoreActionController.endAction(_$actionInfo);
+      _$WordDoctorStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearOcrExtractedWord() {
-    final _$actionInfo = _$_WordDoctorStoreActionController.startAction(
-        name: '_WordDoctorStore.clearOcrExtractedWord');
+    final _$actionInfo = _$WordDoctorStoreBaseActionController.startAction(
+        name: 'WordDoctorStoreBase.clearOcrExtractedWord');
     try {
       return super.clearOcrExtractedWord();
     } finally {
-      _$_WordDoctorStoreActionController.endAction(_$actionInfo);
+      _$WordDoctorStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

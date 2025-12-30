@@ -8,20 +8,20 @@ part of 'adaptive_story_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
+mixin _$AdaptiveStoryStore on AdaptiveStoryStoreBase, Store {
   Computed<StoryPart?>? _$currentPartComputed;
 
   @override
   StoryPart? get currentPart =>
       (_$currentPartComputed ??= Computed<StoryPart?>(() => super.currentPart,
-              name: '_AdaptiveStoryStore.currentPart'))
+              name: 'AdaptiveStoryStoreBase.currentPart'))
           .value;
   Computed<Question?>? _$currentQuestionComputed;
 
   @override
   Question? get currentQuestion => (_$currentQuestionComputed ??=
           Computed<Question?>(() => super.currentQuestion,
-              name: '_AdaptiveStoryStore.currentQuestion'))
+              name: 'AdaptiveStoryStoreBase.currentQuestion'))
       .value;
   Computed<String>? _$currentPartContentWithMaskingComputed;
 
@@ -29,81 +29,81 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   String get currentPartContentWithMasking =>
       (_$currentPartContentWithMaskingComputed ??= Computed<String>(
               () => super.currentPartContentWithMasking,
-              name: '_AdaptiveStoryStore.currentPartContentWithMasking'))
+              name: 'AdaptiveStoryStoreBase.currentPartContentWithMasking'))
           .value;
   Computed<bool>? _$hasCurrentStoryComputed;
 
   @override
   bool get hasCurrentStory =>
       (_$hasCurrentStoryComputed ??= Computed<bool>(() => super.hasCurrentStory,
-              name: '_AdaptiveStoryStore.hasCurrentStory'))
+              name: 'AdaptiveStoryStoreBase.hasCurrentStory'))
           .value;
   Computed<bool>? _$hasCurrentQuestionComputed;
 
   @override
   bool get hasCurrentQuestion => (_$hasCurrentQuestionComputed ??=
           Computed<bool>(() => super.hasCurrentQuestion,
-              name: '_AdaptiveStoryStore.hasCurrentQuestion'))
+              name: 'AdaptiveStoryStoreBase.hasCurrentQuestion'))
       .value;
   Computed<bool>? _$isOnLastPartComputed;
 
   @override
   bool get isOnLastPart =>
       (_$isOnLastPartComputed ??= Computed<bool>(() => super.isOnLastPart,
-              name: '_AdaptiveStoryStore.isOnLastPart'))
+              name: 'AdaptiveStoryStoreBase.isOnLastPart'))
           .value;
   Computed<bool>? _$isOnLastQuestionComputed;
 
   @override
   bool get isOnLastQuestion => (_$isOnLastQuestionComputed ??= Computed<bool>(
           () => super.isOnLastQuestion,
-          name: '_AdaptiveStoryStore.isOnLastQuestion'))
+          name: 'AdaptiveStoryStoreBase.isOnLastQuestion'))
       .value;
   Computed<bool>? _$canGoNextComputed;
 
   @override
   bool get canGoNext =>
       (_$canGoNextComputed ??= Computed<bool>(() => super.canGoNext,
-              name: '_AdaptiveStoryStore.canGoNext'))
+              name: 'AdaptiveStoryStoreBase.canGoNext'))
           .value;
   Computed<bool>? _$canGoPreviousComputed;
 
   @override
   bool get canGoPrevious =>
       (_$canGoPreviousComputed ??= Computed<bool>(() => super.canGoPrevious,
-              name: '_AdaptiveStoryStore.canGoPrevious'))
+              name: 'AdaptiveStoryStoreBase.canGoPrevious'))
           .value;
   Computed<double>? _$progressPercentageComputed;
 
   @override
   double get progressPercentage => (_$progressPercentageComputed ??=
           Computed<double>(() => super.progressPercentage,
-              name: '_AdaptiveStoryStore.progressPercentage'))
+              name: 'AdaptiveStoryStoreBase.progressPercentage'))
       .value;
   Computed<int>? _$totalQuestionsAnsweredComputed;
 
   @override
   int get totalQuestionsAnswered => (_$totalQuestionsAnsweredComputed ??=
           Computed<int>(() => super.totalQuestionsAnswered,
-              name: '_AdaptiveStoryStore.totalQuestionsAnswered'))
+              name: 'AdaptiveStoryStoreBase.totalQuestionsAnswered'))
       .value;
   Computed<List<String>>? _$uniquePracticedWordsComputed;
 
   @override
   List<String> get uniquePracticedWords => (_$uniquePracticedWordsComputed ??=
           Computed<List<String>>(() => super.uniquePracticedWords,
-              name: '_AdaptiveStoryStore.uniquePracticedWords'))
+              name: 'AdaptiveStoryStoreBase.uniquePracticedWords'))
       .value;
   Computed<List<String>>? _$practicedPatternsComputed;
 
   @override
   List<String> get practicedPatterns => (_$practicedPatternsComputed ??=
           Computed<List<String>>(() => super.practicedPatterns,
-              name: '_AdaptiveStoryStore.practicedPatterns'))
+              name: 'AdaptiveStoryStoreBase.practicedPatterns'))
       .value;
 
   late final _$currentStoryAtom =
-      Atom(name: '_AdaptiveStoryStore.currentStory', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.currentStory', context: context);
 
   @override
   Story? get currentStory {
@@ -119,7 +119,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$progressAtom =
-      Atom(name: '_AdaptiveStoryStore.progress', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.progress', context: context);
 
   @override
   StoryProgress? get progress {
@@ -135,7 +135,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$currentPartIndexAtom =
-      Atom(name: '_AdaptiveStoryStore.currentPartIndex', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.currentPartIndex', context: context);
 
   @override
   int get currentPartIndex {
@@ -150,8 +150,8 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
     });
   }
 
-  late final _$currentQuestionIndexAtom =
-      Atom(name: '_AdaptiveStoryStore.currentQuestionIndex', context: context);
+  late final _$currentQuestionIndexAtom = Atom(
+      name: 'AdaptiveStoryStoreBase.currentQuestionIndex', context: context);
 
   @override
   int get currentQuestionIndex {
@@ -168,7 +168,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$isLoadingAtom =
-      Atom(name: '_AdaptiveStoryStore.isLoading', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.isLoading', context: context);
 
   @override
   bool get isLoading {
@@ -184,7 +184,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$errorMessageAtom =
-      Atom(name: '_AdaptiveStoryStore.errorMessage', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.errorMessage', context: context);
 
   @override
   String? get errorMessage {
@@ -200,7 +200,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$showingFeedbackAtom =
-      Atom(name: '_AdaptiveStoryStore.showingFeedback', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.showingFeedback', context: context);
 
   @override
   bool get showingFeedback {
@@ -216,7 +216,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$storyCompletedAtom =
-      Atom(name: '_AdaptiveStoryStore.storyCompleted', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.storyCompleted', context: context);
 
   @override
   bool get storyCompleted {
@@ -232,7 +232,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$lastAnswerAtom =
-      Atom(name: '_AdaptiveStoryStore.lastAnswer', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.lastAnswer', context: context);
 
   @override
   UserAnswer? get lastAnswer {
@@ -248,7 +248,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$practicedWordsAtom =
-      Atom(name: '_AdaptiveStoryStore.practicedWords', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.practicedWords', context: context);
 
   @override
   ObservableList<String> get practicedWords {
@@ -263,8 +263,8 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
     });
   }
 
-  late final _$patternPracticeCountAtom =
-      Atom(name: '_AdaptiveStoryStore.patternPracticeCount', context: context);
+  late final _$patternPracticeCountAtom = Atom(
+      name: 'AdaptiveStoryStoreBase.patternPracticeCount', context: context);
 
   @override
   ObservableMap<String, int> get patternPracticeCount {
@@ -281,7 +281,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$discoveredPatternsAtom =
-      Atom(name: '_AdaptiveStoryStore.discoveredPatterns', context: context);
+      Atom(name: 'AdaptiveStoryStoreBase.discoveredPatterns', context: context);
 
   @override
   ObservableList<LearningPattern> get discoveredPatterns {
@@ -297,7 +297,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$generateStoryAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.generateStory', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.generateStory', context: context);
 
   @override
   Future<void> generateStory() {
@@ -305,7 +305,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$startStoryAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.startStory', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.startStory', context: context);
 
   @override
   Future<void> startStory(String storyId) {
@@ -313,7 +313,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$answerQuestionAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.answerQuestion', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.answerQuestion', context: context);
 
   @override
   Future<void> answerQuestion(String answer) {
@@ -321,7 +321,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$nextQuestionAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.nextQuestion', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.nextQuestion', context: context);
 
   @override
   Future<void> nextQuestion() {
@@ -329,7 +329,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$nextPartAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.nextPart', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.nextPart', context: context);
 
   @override
   Future<void> nextPart() {
@@ -337,15 +337,16 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$completeStoryAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.completeStory', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.completeStory', context: context);
 
   @override
   Future<void> completeStory() {
     return _$completeStoryAsyncAction.run(() => super.completeStory());
   }
 
-  late final _$skipCurrentQuestionAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.skipCurrentQuestion', context: context);
+  late final _$skipCurrentQuestionAsyncAction = AsyncAction(
+      'AdaptiveStoryStoreBase.skipCurrentQuestion',
+      context: context);
 
   @override
   Future<void> skipCurrentQuestion() {
@@ -354,7 +355,7 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$restartStoryAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.restartStory', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.restartStory', context: context);
 
   @override
   Future<void> restartStory() {
@@ -362,15 +363,16 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$goToPreviousPartAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.goToPreviousPart', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.goToPreviousPart', context: context);
 
   @override
   Future<void> goToPreviousPart() {
     return _$goToPreviousPartAsyncAction.run(() => super.goToPreviousPart());
   }
 
-  late final _$speakCurrentContentAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.speakCurrentContent', context: context);
+  late final _$speakCurrentContentAsyncAction = AsyncAction(
+      'AdaptiveStoryStoreBase.speakCurrentContent',
+      context: context);
 
   @override
   Future<void> speakCurrentContent() {
@@ -379,15 +381,16 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
   }
 
   late final _$speakQuestionAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.speakQuestion', context: context);
+      AsyncAction('AdaptiveStoryStoreBase.speakQuestion', context: context);
 
   @override
   Future<void> speakQuestion() {
     return _$speakQuestionAsyncAction.run(() => super.speakQuestion());
   }
 
-  late final _$speakCorrectAnswerAsyncAction =
-      AsyncAction('_AdaptiveStoryStore.speakCorrectAnswer', context: context);
+  late final _$speakCorrectAnswerAsyncAction = AsyncAction(
+      'AdaptiveStoryStoreBase.speakCorrectAnswer',
+      context: context);
 
   @override
   Future<void> speakCorrectAnswer() {
@@ -395,72 +398,72 @@ mixin _$AdaptiveStoryStore on _AdaptiveStoryStore, Store {
         .run(() => super.speakCorrectAnswer());
   }
 
-  late final _$_AdaptiveStoryStoreActionController =
-      ActionController(name: '_AdaptiveStoryStore', context: context);
+  late final _$AdaptiveStoryStoreBaseActionController =
+      ActionController(name: 'AdaptiveStoryStoreBase', context: context);
 
   @override
   List<Story> getAllStories() {
-    final _$actionInfo = _$_AdaptiveStoryStoreActionController.startAction(
-        name: '_AdaptiveStoryStore.getAllStories');
+    final _$actionInfo = _$AdaptiveStoryStoreBaseActionController.startAction(
+        name: 'AdaptiveStoryStoreBase.getAllStories');
     try {
       return super.getAllStories();
     } finally {
-      _$_AdaptiveStoryStoreActionController.endAction(_$actionInfo);
+      _$AdaptiveStoryStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void _updateDiscoveredPatterns(String pattern) {
-    final _$actionInfo = _$_AdaptiveStoryStoreActionController.startAction(
-        name: '_AdaptiveStoryStore._updateDiscoveredPatterns');
+    final _$actionInfo = _$AdaptiveStoryStoreBaseActionController.startAction(
+        name: 'AdaptiveStoryStoreBase._updateDiscoveredPatterns');
     try {
       return super._updateDiscoveredPatterns(pattern);
     } finally {
-      _$_AdaptiveStoryStoreActionController.endAction(_$actionInfo);
+      _$AdaptiveStoryStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void finishStory() {
-    final _$actionInfo = _$_AdaptiveStoryStoreActionController.startAction(
-        name: '_AdaptiveStoryStore.finishStory');
+    final _$actionInfo = _$AdaptiveStoryStoreBaseActionController.startAction(
+        name: 'AdaptiveStoryStoreBase.finishStory');
     try {
       return super.finishStory();
     } finally {
-      _$_AdaptiveStoryStoreActionController.endAction(_$actionInfo);
+      _$AdaptiveStoryStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearError() {
-    final _$actionInfo = _$_AdaptiveStoryStoreActionController.startAction(
-        name: '_AdaptiveStoryStore.clearError');
+    final _$actionInfo = _$AdaptiveStoryStoreBaseActionController.startAction(
+        name: 'AdaptiveStoryStoreBase.clearError');
     try {
       return super.clearError();
     } finally {
-      _$_AdaptiveStoryStoreActionController.endAction(_$actionInfo);
+      _$AdaptiveStoryStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void hideFeedback() {
-    final _$actionInfo = _$_AdaptiveStoryStoreActionController.startAction(
-        name: '_AdaptiveStoryStore.hideFeedback');
+    final _$actionInfo = _$AdaptiveStoryStoreBaseActionController.startAction(
+        name: 'AdaptiveStoryStoreBase.hideFeedback');
     try {
       return super.hideFeedback();
     } finally {
-      _$_AdaptiveStoryStoreActionController.endAction(_$actionInfo);
+      _$AdaptiveStoryStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearCurrentStory() {
-    final _$actionInfo = _$_AdaptiveStoryStoreActionController.startAction(
-        name: '_AdaptiveStoryStore.clearCurrentStory');
+    final _$actionInfo = _$AdaptiveStoryStoreBaseActionController.startAction(
+        name: 'AdaptiveStoryStoreBase.clearCurrentStory');
     try {
       return super.clearCurrentStory();
     } finally {
-      _$_AdaptiveStoryStoreActionController.endAction(_$actionInfo);
+      _$AdaptiveStoryStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

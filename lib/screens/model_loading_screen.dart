@@ -355,7 +355,7 @@ class _ModelLoadingLScreenState extends State<ModelLoadingScreen>
           child: CircularProgressIndicator(
             strokeWidth: 3,
             valueColor: AlwaysStoppedAnimation<Color>(
-                Theme.of(context).primaryColor.withOpacity(0.3)),
+                Theme.of(context).primaryColor.withValues(alpha: 0.3)),
           ),
         ),
       ],
@@ -427,7 +427,7 @@ class _ModelLoadingLScreenState extends State<ModelLoadingScreen>
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  theme.colorScheme.primary.withOpacity(0.1),
+                  theme.colorScheme.primary.withValues(alpha: 0.1),
                   theme.colorScheme.surface,
                   theme.colorScheme.surface,
                 ],

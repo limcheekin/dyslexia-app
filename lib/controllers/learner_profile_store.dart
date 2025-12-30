@@ -7,9 +7,9 @@ import '../utils/service_locator.dart';
 
 part 'learner_profile_store.g.dart';
 
-class LearnerProfileStore = _LearnerProfileStore with _$LearnerProfileStore;
+class LearnerProfileStore = LearnerProfileStoreBase with _$LearnerProfileStore;
 
-abstract class _LearnerProfileStore with Store {
+abstract class LearnerProfileStoreBase with Store {
   static const String _profileKey = 'dyslexic_ai_learner_profile';
   static const String _profileHistoryKey = 'dyslexic_ai_profile_history';
 

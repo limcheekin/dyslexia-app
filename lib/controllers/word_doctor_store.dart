@@ -12,16 +12,16 @@ import '../services/ocr_service.dart';
 
 part 'word_doctor_store.g.dart';
 
-class WordDoctorStore = _WordDoctorStore with _$WordDoctorStore;
+class WordDoctorStore = WordDoctorStoreBase with _$WordDoctorStore;
 
-abstract class _WordDoctorStore with Store {
+abstract class WordDoctorStoreBase with Store {
   final WordAnalysisService _analysisService;
   final PersonalDictionaryService _dictionaryService;
   final TextToSpeechService _ttsService;
   final OcrService _ocrService;
   final ImagePicker _imagePicker = ImagePicker();
 
-  _WordDoctorStore({
+  WordDoctorStoreBase({
     required WordAnalysisService analysisService,
     required PersonalDictionaryService dictionaryService,
     required TextToSpeechService ttsService,
