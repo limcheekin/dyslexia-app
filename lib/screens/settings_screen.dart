@@ -7,6 +7,7 @@ import '../utils/session_debug_helper.dart';
 import 'dart:developer' as developer;
 import '../screens/profile_debug_screen.dart'; // Added import for ProfileDebugScreen
 import 'package:package_info_plus/package_info_plus.dart';
+import '../services/model_download_service.dart'; // Added for Backend info
 import 'dart:math' as math;
 import '../services/global_session_manager.dart';
 
@@ -350,6 +351,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
               leading: Icon(Icons.info, color: Colors.grey[600]),
               title: const Text('Version', style: TextStyle(fontWeight: FontWeight.w600)),
               subtitle: Text('$_appName $_appVersion', style: const TextStyle(fontSize: 12)),
+
+              contentPadding: EdgeInsets.zero,
+            ),
+            ListTile(
+              leading: Icon(Icons.memory, color: Colors.grey[600]),
+              title: const Text('AI Backend', style: TextStyle(fontWeight: FontWeight.w600)),
+              subtitle: Text(getIt<ModelDownloadService>().backendType, style: const TextStyle(fontSize: 12)),
               contentPadding: EdgeInsets.zero,
             ),
           ],

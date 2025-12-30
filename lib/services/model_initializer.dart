@@ -43,10 +43,12 @@ class ModelInitializer {
   InitializationStatus _status = InitializationStatus.notStarted;
   String? _lastError;
   bool _skipGpuBackend = false;  // Set based on crash detection
+  String _backendType = 'Unknown';
 
   InitializationStatus get status => _status;
   String? get lastError => _lastError;
   int get currentAttempt => _currentAttempt;
+  String get backendType => _backendType;
 
   /// Initialize model with retry logic and exponential backoff
   /// This method should NEVER delete files - it only handles memory initialization
@@ -304,6 +306,7 @@ class ModelInitializer {
       
       developer.log('✅ GPU backend initialized successfully!',
           name: 'dyslexic_ai.model_initializer');
+      _backendType = 'GPU';
       return gpuModel;
     } catch (gpuError) {
       developer.log('❌ GPU backend failed: $gpuError',
@@ -330,6 +333,7 @@ class ModelInitializer {
       
       developer.log('✅ CPU backend initialized successfully!',
           name: 'dyslexic_ai.model_initializer');
+      _backendType = 'CPU';
       return cpuModel;
     } catch (cpuError) {
       developer.log('❌ CPU backend also failed: $cpuError',
@@ -353,6 +357,7 @@ class ModelInitializer {
       
       developer.log('✅ CPU backend initialized successfully!',
           name: 'dyslexic_ai.model_initializer');
+      _backendType = 'CPU';
       return cpuModel;
     } catch (cpuError) {
       developer.log('❌ CPU backend failed: $cpuError',
@@ -386,6 +391,7 @@ class ModelInitializer {
     _currentAttempt = 0;
     _status = InitializationStatus.notStarted;
     _lastError = null;
+    _backendType = 'Unknown';
     developer.log('🔄 ModelInitializer reset',
         name: 'dyslexic_ai.model_initializer');
   }

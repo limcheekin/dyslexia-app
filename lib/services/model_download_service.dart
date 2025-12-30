@@ -148,6 +148,9 @@ class ModelDownloadService {
   /// Get current model status
   ModelStatus get currentStatus => _currentStatus;
 
+  /// Get the backend type (GPU/CPU) used by the initialized model
+  String get backendType => _modelInitializer.backendType;
+
   Future<String> _getModelFilePath() async {
     final appDir = await getApplicationDocumentsDirectory();
     final modelDir = Directory(path.join(appDir.path, 'models'));
