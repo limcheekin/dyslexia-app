@@ -23,22 +23,22 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.29.1"  # Match local Flutter version
+          flutter-version: "3.38.5"  # Match local Flutter version
           channel: stable
           cache: true
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
         with:
-          api-level: 35  # Match compileSdk 35
+          api-level: 36  # Match compileSdk 36
           target: google_apis
 
       - name: Accept Android SDK licenses
         run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      - name: Install Android SDK 35
+      - name: Install Android SDK 36
         run: |
-          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0" || true
+          $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" || true
 
       - name: Verify environment
         run: |
@@ -98,7 +98,7 @@ jobs:
             ### What's New
             - Auto-generated from latest main branch
             - Built with Flutter ${{ env.FLUTTER_VERSION }}
-            - Android APK for installation (SDK 35)
+            - Android APK for installation (SDK 36)
             
             ### Download
             📱 **Android**: Download the APK file below
