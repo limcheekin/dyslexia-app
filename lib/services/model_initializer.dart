@@ -79,12 +79,19 @@ class ModelInitializer {
 
     final prefs = await SharedPreferences.getInstance();
     
-    // Check if we crashed last time
+    // Always clear GPU cache before initialization to prevent stale cache issues
+    // The .bin files in cache reference the original model path, and if that path
+    // changes (e.g., after reinstall or cache clear), TFLite will fail to find the file
+    developer.log(
+        '🧹 Clearing GPU cache before initialization to ensure fresh start...',
+        name: 'dyslexic_ai.model_initializer');
+    await clearGpuCache();
+    
+    // Check if we crashed last time (for additional logging/diagnostics)
     if (prefs.getBool(_crashDetectionKey) == true) {
       developer.log(
-          '⚠️ DETECTED CRASH: Initialization was interrupted previously. Clearing GPU cache to recover.',
+          '⚠️ DETECTED CRASH: Initialization was interrupted previously.',
           name: 'dyslexic_ai.model_initializer');
-      await clearGpuCache();
     }
 
     // Set crash marker - if we die after this, next run will know
@@ -249,13 +256,46 @@ class ModelInitializer {
     }
   }
 
-  /// Create model with GPU/CPU fallback using new FlutterGemma API
+  /// Create model with CPU first, then GPU fallback
+  /// Using CPU first because GPU initialization appears to be causing native crashes
   Future<InferenceModel?> _createModelWithFallback() async {
+    // Try CPU backend first for stability
+    developer.log('🔄 Attempting CPU backend initialization first (for stability)...',
+        name: 'dyslexic_ai.model_initializer');
+    
     try {
-      developer.log('🎮 Attempting GPU delegate initialization...',
-          name: 'dyslexic_ai.model_initializer');
+      // Small delay to allow system resources to stabilize
+      await Future.delayed(const Duration(milliseconds: 500));
       
-      // Use getActiveModel with GPU preference
+      developer.log('📊 Calling FlutterGemma.getActiveModel with CPU backend...',
+          name: 'dyslexic_ai.model_initializer');
+          
+      final cpuModel = await FlutterGemma.getActiveModel(
+        preferredBackend: PreferredBackend.cpu,
+        maxTokens: 2048,
+        supportImage: true,
+        maxNumImages: 1,
+      );
+      
+      developer.log('✅ CPU backend initialized successfully!',
+          name: 'dyslexic_ai.model_initializer');
+      return cpuModel;
+    } catch (cpuError) {
+      developer.log('❌ CPU backend failed: $cpuError',
+          name: 'dyslexic_ai.model_initializer');
+    }
+    
+    // If CPU fails, try GPU as fallback
+    developer.log('🔄 Falling back to GPU backend...',
+        name: 'dyslexic_ai.model_initializer');
+    
+    try {
+      // Add delay before GPU initialization to allow memory cleanup
+      await Future.delayed(const Duration(seconds: 1));
+      
+      developer.log('📊 Calling FlutterGemma.getActiveModel with GPU backend...',
+          name: 'dyslexic_ai.model_initializer');
+          
       final gpuModel = await FlutterGemma.getActiveModel(
         preferredBackend: PreferredBackend.gpu,
         maxTokens: 2048,
@@ -263,31 +303,13 @@ class ModelInitializer {
         maxNumImages: 1,
       );
       
-      developer.log('✅ GPU delegate initialized successfully!',
+      developer.log('✅ GPU backend initialized successfully!',
           name: 'dyslexic_ai.model_initializer');
       return gpuModel;
-    } catch (error) {
-      developer.log('❌ GPU backend failed: $error',
+    } catch (gpuError) {
+      developer.log('❌ GPU backend also failed: $gpuError',
           name: 'dyslexic_ai.model_initializer');
-      developer.log('🔄 Falling back to CPU backend...',
-          name: 'dyslexic_ai.model_initializer');
-      try {
-        // Use getActiveModel with CPU preference
-        final cpuModel = await FlutterGemma.getActiveModel(
-          preferredBackend: PreferredBackend.cpu,
-          maxTokens: 2048,
-          supportImage: true,
-          maxNumImages: 1,
-        );
-        
-        developer.log('✅ CPU delegate initialized successfully',
-            name: 'dyslexic_ai.model_initializer');
-        return cpuModel;
-      } catch (cpuError) {
-        developer.log('❌ CPU backend also failed: $cpuError',
-            name: 'dyslexic_ai.model_initializer');
-        return null;
-      }
+      return null;
     }
   }
 
